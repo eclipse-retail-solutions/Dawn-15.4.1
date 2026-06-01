@@ -1,102 +1,51 @@
-{% comment %} {% assign current_mpn = product.metafields['custom']['related_products'].value %}
-
-{% for p in collections.all.products %}
-  {% assign p_mpn = p.metafields['custom']['related_products'].value %}
-  {% if p_mpn == current_mpn and p.id != product.id %}
-    <a href="{{ p.url }}">{{ p.title }}</a>
-  {% endif %}
-{% endfor %}
- {% endcomment %}
-
 <style>
-.mpn-related-item.is-active {
-  border: 2px solid black;
-}
-</style>
-{% assign current_mpn = product.metafields['shopify--facts']['mpn'].value %}
-
-{% for p in collections.all.products %}
-  {% assign p_mpn = p.metafields['shopify--facts']['mpn'].value %}
-
-  {% if p_mpn == current_mpn %}
-    <a href="{{ p.url }}" class="mpn-related-item {% if p.id == product.id %}is-active{% endif %}">
-      <img src="{{ p.featured_image | image_url: width: 50 }}" alt="{{ p.title }}" loading="lazy">
-    </a>
-  {% endif %}
-{% endfor %}
-
-<style>
-.mpn-related-item.is-active {
-  border: 2px solid black;
-}
-</style>
-{% assign current_mpn = product.metafields['shopify--facts']['mpn'].value %}
-{% assign current_collection = product.collections.first %}
-
-{% if current_collection %}
-  {% paginate current_collection.products by 100 %}
-    {% for p in current_collection.products %}
-      {% assign p_mpn = p.metafields['shopify--facts']['mpn'].value %}
-      {% if p_mpn == current_mpn %}
-        <a href="{{ p.url }}" class="mpn-related-item {% if p.id == product.id %}is-active{% endif %}">
-          <img
-            src="{{ p.featured_image | image_url: width: 100 }}"
-            alt="{{ p.title }}"
-            loading="lazy"
-          >
-        </a>
-      {% endif %}
-    {% endfor %}
-  {% endpaginate %}
-{% endif %}
-
-
-{% comment %} 
-trying to use current collection to limit the number of products we loop through, but not sure if this is the right approach since it assumes that all related products will be in the same collection.
-<style>
-.mpn-related-item.is-active {
-  border: 2px solid black;
-}
-</style>
-{% assign current_mpn = product.metafields['shopify--facts']['mpn'].value %}
-{% assign current_collection = product.collections.first %}
-
-{% if current_collection %}
-  {% paginate current_collection.products by 100 %}
-    {% for p in current_collection.products %}
-      {% assign p_mpn = p.metafields['shopify--facts']['mpn'].value %}
-      {% if p_mpn == current_mpn %}
-        <a href="{{ p.url }}">
-          <img class="mpn-related-item {% if p.id == product.id %}is-active{% endif %}"
-            src="{{ p.featured_image | image_url: width: 50 }}"
-            alt="{{ p.title }}"
-            loading="lazy"
-          >
-        </a>
-      {% endif %}
-    {% endfor %}
-  {% endpaginate %}
-{% endif %} {% endcomment %}
-
-
-
-
-<style>
-.mpn-related-item.is-active {
-  border: 1px solid black;
-}
 .mpn-switcher {
-    display: flex;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
-.mpn-switcher-item {
-    margin-right: 1rem;
+.mpn-switcher-item img {
+  display: block;
+  border: 2px solid transparent;
+}
+.mpn-switcher-item img.is-active {
+  border-color: black;
 }
 </style>
-{% assign grouped = product.metafields['custom']['grouped_products'].value %}
-<div class="mpn-switcher">
-  {% for p in grouped %}
-    <a href="{{ p.url }}" class="mpn-switcher-item">
-      <img src="{{ p.featured_image | image_url: width: 50 }}" alt="{{ p.title }}" loading="lazy" class="mpn-related-item {% if p.id == product.id %}is-active{% endif %}">
-    </a>
+
+{% assign current_mpn = product.metafields['shopify--facts']['mpn'].value %}
+
+<p style="background:#ff0;padding:8px;font-size:12px;">
+  <strong>DEBUG — current MPN:</strong> {{ current_mpn | default: '(blank)' }}<br>
+  {% for collection in product.collections %}
+    <strong>Collection:</strong> {{ collection.title }} ({{ collection.products | size }} products shown in Liquid)<br>
+    {% for p in collection.products %}
+      &nbsp;&nbsp;{{ p.title }} — MPN: {{ p.metafields['shopify--facts']['mpn'].value | default: '(none)' }}<br>
+    {% endfor %}
   {% endfor %}
-</div>
+</p>
+
+{% if current_mpn != blank %}
+  {% assign shown_ids = "" %}
+  <div class="mpn-switcher">
+    {% for collection in product.collections %}
+      {% for p in collection.products %}
+        {% assign p_mpn = p.metafields['shopify--facts']['mpn'].value %}
+        {% if p_mpn == current_mpn %}
+          {% assign p_id_str = p.id | append: "" %}
+          {% unless shown_ids contains p_id_str %}
+            {% assign shown_ids = shown_ids | append: p_id_str | append: "," %}
+            <a href="{{ p.url }}" class="mpn-switcher-item">
+              <img
+                src="{{ p.featured_image | image_url: width: 50 }}"
+                alt="{{ p.title }}"
+                loading="lazy"
+                class="mpn-related-item {% if p.id == product.id %}is-active{% endif %}"
+              >
+            </a>
+          {% endunless %}
+        {% endif %}
+      {% endfor %}
+    {% endfor %}
+  </div>
+{% endif %}

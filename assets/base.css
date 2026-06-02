@@ -12,6 +12,10 @@
 .contains-card--product {
   --border-radius: var(--product-card-corner-radius);
   --border-width: var(--product-card-border-width);
+  --border-top-width: var(--product-card-border-top-width);
+  --border-right-width: var(--product-card-border-right-width);
+  --border-bottom-width: var(--product-card-border-bottom-width);
+  --border-left-width: var(--product-card-border-left-width);
   --border-opacity: var(--product-card-border-opacity);
   --shadow-horizontal-offset: var(--product-card-shadow-horizontal-offset);
   --shadow-vertical-offset: var(--product-card-shadow-vertical-offset);
@@ -26,6 +30,10 @@
 .contains-card--collection {
   --border-radius: var(--collection-card-corner-radius);
   --border-width: var(--collection-card-border-width);
+  --border-top-width: var(--collection-card-border-top-width);
+  --border-right-width: var(--collection-card-border-right-width);
+  --border-bottom-width: var(--collection-card-border-bottom-width);
+  --border-left-width: var(--collection-card-border-left-width);
   --border-opacity: var(--collection-card-border-opacity);
   --shadow-horizontal-offset: var(--collection-card-shadow-horizontal-offset);
   --shadow-vertical-offset: var(--collection-card-shadow-vertical-offset);

@@ -545,12 +545,42 @@
       },
       {
         "type": "range",
-        "id": "card_border_thickness",
+        "id": "card_border_thickness_top",
         "min": 0,
         "max": 24,
         "step": 1,
         "unit": "px",
-        "label": "t:settings_schema.global.settings.thickness.label",
+        "label": "Top",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "card_border_thickness_right",
+        "min": 0,
+        "max": 24,
+        "step": 1,
+        "unit": "px",
+        "label": "Right",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "card_border_thickness_bottom",
+        "min": 0,
+        "max": 24,
+        "step": 1,
+        "unit": "px",
+        "label": "Bottom",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "card_border_thickness_left",
+        "min": 0,
+        "max": 24,
+        "step": 1,
+        "unit": "px",
+        "label": "Left",
         "default": 0
       },
       {
@@ -680,12 +710,42 @@
       },
       {
         "type": "range",
-        "id": "collection_card_border_thickness",
+        "id": "collection_card_border_thickness_top",
         "min": 0,
         "max": 24,
         "step": 1,
         "unit": "px",
-        "label": "t:settings_schema.global.settings.thickness.label",
+        "label": "Top",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "collection_card_border_thickness_right",
+        "min": 0,
+        "max": 24,
+        "step": 1,
+        "unit": "px",
+        "label": "Right",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "collection_card_border_thickness_bottom",
+        "min": 0,
+        "max": 24,
+        "step": 1,
+        "unit": "px",
+        "label": "Bottom",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "collection_card_border_thickness_left",
+        "min": 0,
+        "max": 24,
+        "step": 1,
+        "unit": "px",
+        "label": "Left",
         "default": 0
       },
       {

@@ -45,7 +45,12 @@
   position: relative;
   box-sizing: border-box;
   border-radius: var(--border-radius);
-  border: var(--border-width) solid rgba(var(--color-foreground), var(--border-opacity));
+  border-style: solid;
+  border-color: rgba(var(--color-foreground), var(--border-opacity));
+  border-top-width: var(--border-top-width, var(--border-width, 0rem));
+  border-right-width: var(--border-right-width, var(--border-width, 0rem));
+  border-bottom-width: var(--border-bottom-width, var(--border-width, 0rem));
+  border-left-width: var(--border-left-width, var(--border-width, 0rem));
 }
 
 .card--card:after,
@@ -53,10 +58,10 @@
   content: '';
   position: absolute;
   z-index: -1;
-  width: calc(var(--border-width) * 2 + 100%);
-  height: calc(var(--border-width) * 2 + 100%);
-  top: calc(var(--border-width) * -1);
-  left: calc(var(--border-width) * -1);
+  width: calc(var(--border-left-width, var(--border-width, 0rem)) + var(--border-right-width, var(--border-width, 0rem)) + 100%);
+  height: calc(var(--border-top-width, var(--border-width, 0rem)) + var(--border-bottom-width, var(--border-width, 0rem)) + 100%);
+  top: calc(var(--border-top-width, var(--border-width, 0rem)) * -1);
+  left: calc(var(--border-left-width, var(--border-width, 0rem)) * -1);
   border-radius: var(--border-radius);
   box-shadow: var(--shadow-horizontal-offset) var(--shadow-vertical-offset) var(--shadow-blur-radius)
     rgba(var(--color-shadow), var(--shadow-opacity));

@@ -9,55 +9,57 @@
  */
 {
   "sections": {
-    "image_banner": {
-      "type": "image-banner",
-      "blocks": {
-        "heading": {
-          "type": "heading",
-          "disabled": true,
-          "settings": {
-            "heading": "Image banner",
-            "heading_size": "h0"
-          }
-        },
-        "text": {
-          "type": "text",
-          "disabled": true,
-          "settings": {
-            "text": "Give customers details about the banner image(s) or content on the template.",
-            "text_style": "body"
-          }
-        },
-        "button": {
-          "type": "buttons",
-          "disabled": true,
-          "settings": {
-            "button_label_1": "Shop all",
-            "button_link_1": "shopify://collections/all",
-            "button_style_secondary_1": true,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
-        }
-      },
-      "block_order": [
-        "heading",
-        "text",
-        "button"
-      ],
+    "hero_pyDJeW": {
+      "type": "hero",
+      "name": "Hero",
       "settings": {
-        "image": "shopify://shop_images/Hero-Barbour-Womens-SS26-1950.jpg",
-        "image_overlay_opacity": 0,
-        "image_height": "adapt",
-        "image_behavior": "none",
-        "desktop_content_position": "bottom-center",
-        "desktop_content_alignment": "right",
-        "show_text_box": false,
-        "color_scheme": "scheme-3",
-        "stack_images_on_mobile": false,
-        "mobile_content_alignment": "center",
-        "show_text_below": false
+        "media_type_1": "image",
+        "image_1": "shopify://shop_images/Hero-Holland-Cooper-SS26-1950.jpg",
+        "media_type_2": "image",
+        "image_2": "shopify://shop_images/Hero-Birkenstock-Womens-SS26-1950.jpg",
+        "media_type_3": "image",
+        "image_3": "shopify://shop_images/Hero-Mens-Sandbanks-SS26-1950.jpg",
+        "media_type_4": "image",
+        "image_4": "shopify://shop_images/Hero-Barbour-Womens-SS26-1950_bec31b28-0b3d-4306-9adf-e1a185eb08ce.jpg",
+        "media_type_5": "image",
+        "media_type_6": "image",
+        "stack_media_on_mobile": false,
+        "custom_mobile_media": true,
+        "media_type_1_mobile": "image",
+        "image_1_mobile": "shopify://shop_images/Hero-Holland-Cooper-SS26-812.jpg",
+        "media_type_2_mobile": "image",
+        "image_2_mobile": "shopify://shop_images/Hero-Birkenstock-Womens-SS26-812.jpg",
+        "media_type_3_mobile": "image",
+        "image_3_mobile": "shopify://shop_images/Hero-Mens-Sandbanks-SS26-812.jpg",
+        "media_type_4_mobile": "image",
+        "image_4_mobile": "shopify://shop_images/Hero-Barbour-Womens-SS26-812.jpg",
+        "media_type_5_mobile": "image",
+        "media_type_6_mobile": "image",
+        "link": "",
+        "open_in_new_tab": false,
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-end",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "page-width",
+        "section_height": "full-screen",
+        "section_height_custom": 50,
+        "color_scheme": "scheme-1",
+        "toggle_overlay": true,
+        "overlay_color": "#00000026",
+        "overlay_style": "gradient",
+        "gradient_direction": "to top",
+        "blurred_reflection": false,
+        "reflection_opacity": 75,
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "padding-block-start": 40,
+        "padding-block-end": 40
       }
     },
     "featured_collection": {
@@ -87,49 +89,6 @@
         "swipe_on_mobile": true,
         "padding_top": 44,
         "padding_bottom": 36
-      }
-    },
-    "usp_strip_bJRxBj": {
-      "type": "usp-strip",
-      "blocks": {
-        "usp_item_xRpidY": {
-          "type": "usp_item",
-          "settings": {
-            "text": "Free UK delivery on orders over £100",
-            "icon": "truck",
-            "separator": "·"
-          }
-        },
-        "usp_item_c3aVtr": {
-          "type": "usp_item",
-          "settings": {
-            "text": "Secure Checkout",
-            "icon": "star",
-            "separator": "·"
-          }
-        },
-        "usp_item_r7hKAH": {
-          "type": "usp_item",
-          "settings": {
-            "text": "Free UK Returns within 15 days",
-            "icon": "return",
-            "separator": "·"
-          }
-        }
-      },
-      "block_order": [
-        "usp_item_xRpidY",
-        "usp_item_c3aVtr",
-        "usp_item_r7hKAH"
-      ],
-      "name": "USP Strip",
-      "settings": {
-        "color_scheme": "",
-        "direction": "normal",
-        "icon_size": 18,
-        "item_gap": 40,
-        "padding_top": 16,
-        "padding_bottom": 16
       }
     },
     "multirow_T73QJU": {
@@ -278,6 +237,49 @@
         "padding_bottom": 0
       }
     },
+    "usp_strip_bJRxBj": {
+      "type": "usp-strip",
+      "blocks": {
+        "usp_item_xRpidY": {
+          "type": "usp_item",
+          "settings": {
+            "text": "Free UK delivery on orders over £100",
+            "icon": "truck",
+            "separator": "·"
+          }
+        },
+        "usp_item_c3aVtr": {
+          "type": "usp_item",
+          "settings": {
+            "text": "Secure Checkout",
+            "icon": "star",
+            "separator": "·"
+          }
+        },
+        "usp_item_r7hKAH": {
+          "type": "usp_item",
+          "settings": {
+            "text": "Free UK Returns within 15 days",
+            "icon": "return",
+            "separator": "·"
+          }
+        }
+      },
+      "block_order": [
+        "usp_item_xRpidY",
+        "usp_item_c3aVtr",
+        "usp_item_r7hKAH"
+      ],
+      "name": "USP Strip",
+      "settings": {
+        "color_scheme": "",
+        "direction": "normal",
+        "icon_size": 18,
+        "item_gap": 40,
+        "padding_top": 16,
+        "padding_bottom": 16
+      }
+    },
     "blocks_6CnLki": {
       "type": "_blocks",
       "blocks": {
@@ -351,7 +353,7 @@
     }
   },
   "order": [
-    "image_banner",
+    "hero_pyDJeW",
     "featured_collection",
     "multirow_T73QJU",
     "17764328313abd5f70",

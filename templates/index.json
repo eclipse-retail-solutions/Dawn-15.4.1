@@ -348,58 +348,6 @@
         "padding_top": 16,
         "padding_bottom": 16
       }
-    },
-    "usp_strip_nMCAqk": {
-      "type": "usp-strip",
-      "blocks": {
-        "usp_item_3hajx3": {
-          "type": "usp_item",
-          "settings": {
-            "text": "Free shipping over £50",
-            "icon": "truck",
-            "separator": "·"
-          }
-        },
-        "usp_item_CUtWFK": {
-          "type": "usp_item",
-          "settings": {
-            "text": "Easy returns",
-            "icon": "return",
-            "separator": "·"
-          }
-        },
-        "usp_item_jyiiQf": {
-          "type": "usp_item",
-          "settings": {
-            "text": "Premium quality",
-            "icon": "star",
-            "separator": "·"
-          }
-        },
-        "usp_item_FeNa6h": {
-          "type": "usp_item",
-          "settings": {
-            "text": "24/7 Support",
-            "icon": "chat_bubble",
-            "separator": "·"
-          }
-        }
-      },
-      "block_order": [
-        "usp_item_3hajx3",
-        "usp_item_CUtWFK",
-        "usp_item_jyiiQf",
-        "usp_item_FeNa6h"
-      ],
-      "name": "USP Strip",
-      "settings": {
-        "color_scheme": "",
-        "direction": "reverse",
-        "icon_size": 18,
-        "item_gap": 40,
-        "padding_top": 16,
-        "padding_bottom": 16
-      }
     }
   },
   "order": [
@@ -412,7 +360,6 @@
     "custom_liquid_bnWKD3",
     "blocks_6CnLki",
     "c2a_trustmetrics_eMtphV",
-    "usp_strip_bJRxBj",
-    "usp_strip_nMCAqk"
+    "usp_strip_bJRxBj"
   ]
 }

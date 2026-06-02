@@ -68,17 +68,27 @@
         },
         "reviews_widget_1": {
           "type": "reviews_widget",
-          "settings": {}
+          "settings": {
+            "widget_id": "lA3XFLzE9ipuUMPH",
+            "store_name": "excel-clothing",
+            "lang": "en"
+          }
         },
         "klarna_placement_1": {
           "type": "klarna_placement",
-          "settings": {}
+          "settings": {
+            "data_key": "top-strip-promotion-badge",
+            "data_locale": "en-GB"
+          }
         }
       },
       "block_order": [
         "text_link_1",
         "reviews_widget_1",
         "klarna_placement_1"
+      ],
+      "custom_css": [
+        "#cta_top-banner{background: #303030}"
       ],
       "settings": {
         "color_scheme": "scheme-3",

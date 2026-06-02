@@ -1,89 +1,19 @@
 {% liquid
   assign max_slots = 6
-  assign media_count = 0
-  assign has_only_video = true
-  assign fallback_to_desktop = false
-  assign media_count_mobile = 0
-  assign has_only_video_mobile = true
+  assign slide_count = 0
 
   for i in (1..max_slots)
     assign image_key = 'image_' | append: i
     assign video_key = 'video_' | append: i
-    assign type_key = 'media_type_' | append: i
+    assign type_key  = 'media_type_' | append: i
     if section.settings[image_key] != blank and section.settings[type_key] == 'image'
-      assign media_count = media_count | plus: 1
-      assign has_only_video = false
+      assign slide_count = slide_count | plus: 1
     elsif section.settings[video_key] != blank and section.settings[type_key] == 'video'
-      assign media_count = media_count | plus: 1
+      assign slide_count = slide_count | plus: 1
     endif
   endfor
 
-  if media_count == 0
-    assign has_only_video = false
-  endif
-
-  if section.settings.custom_mobile_media
-    for i in (1..max_slots)
-      assign image_key_m = 'image_' | append: i | append: '_mobile'
-      assign video_key_m = 'video_' | append: i | append: '_mobile'
-      assign type_key_m = 'media_type_' | append: i | append: '_mobile'
-      if section.settings[image_key_m] != blank and section.settings[type_key_m] == 'image'
-        assign media_count_mobile = media_count_mobile | plus: 1
-        assign has_only_video_mobile = false
-      elsif section.settings[video_key_m] != blank and section.settings[type_key_m] == 'video'
-        assign media_count_mobile = media_count_mobile | plus: 1
-      endif
-    endfor
-  endif
-
-  if media_count_mobile == 0
-    assign has_only_video_mobile = false
-  endif
-
-  assign media_wrapper_desktop_class = 'hero__media-wrapper hero__media-wrapper--desktop'
-  assign media_wrapper_mobile_class = 'hero__media-wrapper hero__media-wrapper--mobile'
-
-  if section.settings.custom_mobile_media == false or section.settings.custom_mobile_media == true and media_count_mobile == 0
-    assign media_wrapper_desktop_class = media_wrapper_desktop_class | append: ' hero__media-wrapper--mobile'
-  endif
-
-  assign show_mobile_blurred_reflection = false
-  if section.settings.blurred_reflection
-    if section.settings.custom_mobile_media == true and media_count_mobile > 0 and has_only_video_mobile == false
-      assign show_mobile_blurred_reflection = true
-    elsif section.settings.custom_mobile_media == true and media_count_mobile == 0 and media_count > 0 and has_only_video == false
-      assign show_mobile_blurred_reflection = true
-    elsif section.settings.custom_mobile_media == false and media_count > 0 and has_only_video == false
-      assign show_mobile_blurred_reflection = true
-    endif
-  endif
-
-  if media_count > 0
-    assign media_width_desktop_num = 100 | divided_by: media_count
-  else
-    assign media_width_desktop_num = 100
-  endif
-  assign media_width_desktop = media_width_desktop_num | append: 'vw'
-
-  if section.settings.custom_mobile_media == false or media_count_mobile == 0 or media_count == 0
-    assign media_count_mobile = media_count
-    assign fallback_to_desktop = true
-  endif
-
-  if fallback_to_desktop
-    assign media_width_mobile = media_width_desktop
-  elsif section.settings.stack_media_on_mobile
-    assign media_width_mobile = '100vw'
-  elsif media_count_mobile > 0
-    assign media_width_mobile_num = 100 | divided_by: media_count_mobile
-    assign media_width_mobile = media_width_mobile_num | append: 'vw'
-  else
-    assign media_width_mobile = '100vw'
-  endif
-
-  assign sizes = '(min-width: 750px) ' | append: media_width_desktop | append: ', ' | append: media_width_mobile
   assign widths = '832, 1200, 1600, 1920, 2560, 3840'
-  assign sizes_mobile = media_width_mobile
   assign mobile_widths = '416, 600, 800, 1200, 1600'
   assign mobile_widths_array = mobile_widths | split: ', '
 
@@ -91,235 +21,15 @@
   if section.index == 1
     assign fetch_priority = 'high'
   endif
+
+  assign autoplay_ms = section.settings.autoplay_speed | times: 1000
 %}
 
-{% capture media %}
-  {% for i in (1..max_slots) %}
-    {%- assign image_key = 'image_' | append: i -%}
-    {%- assign video_key = 'video_' | append: i -%}
-    {%- assign type_key = 'media_type_' | append: i -%}
-    {%- assign image_key_m = 'image_' | append: i | append: '_mobile' -%}
-    {%- assign video_key_m = 'video_' | append: i | append: '_mobile' -%}
-    {%- assign type_key_m = 'media_type_' | append: i | append: '_mobile' -%}
-    {%- assign media_i = 'none' -%}
-    {%- assign media_i_mobile = 'none' -%}
-
-    {%- if section.settings[image_key] != blank and section.settings[type_key] == 'image' -%}
-      {%- assign media_i = 'image' -%}
-    {%- elsif section.settings[video_key] != blank and section.settings[type_key] == 'video' -%}
-      {%- assign media_i = 'video' -%}
-    {%- endif -%}
-
-    {%- if section.settings.custom_mobile_media and fallback_to_desktop == false -%}
-      {%- if section.settings[image_key_m] != blank and section.settings[type_key_m] == 'image' -%}
-        {%- assign media_i_mobile = 'image' -%}
-      {%- elsif section.settings[video_key_m] != blank and section.settings[type_key_m] == 'video' -%}
-        {%- assign media_i_mobile = 'video' -%}
-      {%- endif -%}
-    {%- endif -%}
-
-    {%- if media_i == 'image' and media_i_mobile == 'image' -%}
-      <picture class="hero__media">
-        <source
-          media="(max-width: 749px)"
-          srcset="
-            {%- for mobile_width in mobile_widths_array -%}
-              {{ section.settings[image_key_m] | image_url: width: mobile_width }} {{ mobile_width }}w{% unless forloop.last %},{% endunless %}
-            {%- endfor -%}
-          "
-          sizes="{{ sizes_mobile }}"
-          width="{{ section.settings[image_key_m].width }}"
-          height="{{ section.settings[image_key_m].height }}"
-        >
-        {{
-          section.settings[image_key]
-          | image_url: width: 3840
-          | image_tag:
-            width: section.settings[image_key].width,
-            widths: widths,
-            height: section.settings[image_key].height,
-            alt: section.settings[image_key].alt,
-            class: 'hero__media',
-            sizes: sizes,
-            fetchpriority: fetch_priority
-        }}
-      </picture>
-    {%- elsif media_i == 'image' -%}
-      <div class="{{ media_wrapper_desktop_class }}">
-        {{
-          section.settings[image_key]
-          | image_url: width: 3840
-          | image_tag:
-            width: section.settings[image_key].width,
-            widths: widths,
-            height: section.settings[image_key].height,
-            alt: section.settings[image_key].alt,
-            class: 'hero__media',
-            sizes: sizes,
-            fetchpriority: fetch_priority
-        }}
-      </div>
-    {%- endif -%}
-
-    {%- if media_i == 'video' -%}
-      <div class="{{ media_wrapper_desktop_class }}">
-        {{
-          section.settings[video_key]
-          | video_tag:
-            poster: nil,
-            autoplay: true,
-            loop: true,
-            controls: false,
-            muted: true,
-            class: 'hero__media'
-        }}
-      </div>
-    {%- endif -%}
-
-    {%- if section.settings.custom_mobile_media and fallback_to_desktop == false -%}
-      {%- if media_i_mobile == 'image' and media_i != 'image' -%}
-        <div class="{{ media_wrapper_mobile_class }}">
-          {{
-            section.settings[image_key_m]
-            | image_url: width: 1600
-            | image_tag:
-              width: section.settings[image_key_m].width,
-              widths: mobile_widths,
-              height: section.settings[image_key_m].height,
-              alt: section.settings[image_key_m].alt,
-              class: 'hero__media',
-              sizes: sizes_mobile,
-              fetchpriority: fetch_priority
-          }}
-        </div>
-      {%- endif -%}
-
-      {%- if media_i_mobile == 'video' -%}
-        <div class="{{ media_wrapper_mobile_class }}">
-          {{
-            section.settings[video_key_m]
-            | video_tag:
-              poster: nil,
-              autoplay: true,
-              loop: true,
-              controls: false,
-              muted: true,
-              class: 'hero__media'
-          }}
-        </div>
-      {%- endif -%}
-    {%- endif -%}
-  {% endfor %}
-
-  {% if media_count == 0 %}
-    {{ 'hero-apparel-1' | placeholder_svg_tag: 'hero__media' }}
-  {% endif %}
-{% endcapture %}
-
-{% capture media_blurred %}
-  {%- for i in (1..max_slots) -%}
-    {%- assign image_key = 'image_' | append: i -%}
-    {%- assign type_key = 'media_type_' | append: i -%}
-    {%- if section.settings[image_key] != blank and section.settings[type_key] == 'image' -%}
-      {{
-        section.settings[image_key]
-        | image_url: width: 3840
-        | image_tag:
-          width: section.settings[image_key].width,
-          widths: widths,
-          height: section.settings[image_key].height,
-          alt: '',
-          class: 'hero__media',
-          sizes: sizes
-      }}
-    {%- endif -%}
-  {%- endfor -%}
-  {%- if media_count == 0 -%}
-    {{ 'hero-apparel-1' | placeholder_svg_tag: 'hero__media' }}
-  {%- endif -%}
-{% endcapture %}
-
-{% capture mobile_media_blurred %}
-  {%- if section.settings.stack_media_on_mobile == false -%}
-    {%- if section.settings.custom_mobile_media == true and fallback_to_desktop == false -%}
-      {%- for i in (1..max_slots) -%}
-        {%- assign image_key_m = 'image_' | append: i | append: '_mobile' -%}
-        {%- assign type_key_m = 'media_type_' | append: i | append: '_mobile' -%}
-        {%- if section.settings[image_key_m] != blank and section.settings[type_key_m] == 'image' -%}
-          {{
-            section.settings[image_key_m]
-            | image_url: width: 1600
-            | image_tag:
-              width: section.settings[image_key_m].width,
-              widths: mobile_widths,
-              height: section.settings[image_key_m].height,
-              alt: '',
-              class: 'hero__media',
-              sizes: sizes_mobile
-          }}
-        {%- endif -%}
-      {%- endfor -%}
-    {%- elsif fallback_to_desktop -%}
-      {{ media_blurred }}
-    {%- endif -%}
-  {%- elsif section.settings.stack_media_on_mobile == true -%}
-    {%- if section.settings.custom_mobile_media == true and fallback_to_desktop == false -%}
-      {%- assign found_mobile_blurred = false -%}
-      {%- for i in (max_slots..1) -%}
-        {%- unless found_mobile_blurred -%}
-          {%- assign image_key_m = 'image_' | append: i | append: '_mobile' -%}
-          {%- assign type_key_m = 'media_type_' | append: i | append: '_mobile' -%}
-          {%- if section.settings[image_key_m] != blank and section.settings[type_key_m] == 'image' -%}
-            {{
-              section.settings[image_key_m]
-              | image_url: width: 1600
-              | image_tag:
-                width: section.settings[image_key_m].width,
-                widths: mobile_widths,
-                height: section.settings[image_key_m].height,
-                alt: '',
-                class: 'hero__media',
-                sizes: sizes_mobile
-            }}
-            {%- assign found_mobile_blurred = true -%}
-          {%- endif -%}
-        {%- endunless -%}
-      {%- endfor -%}
-    {%- elsif fallback_to_desktop -%}
-      {%- if media_count > 0 -%}
-        {%- assign found_desktop_blurred = false -%}
-        {%- for i in (max_slots..1) -%}
-          {%- unless found_desktop_blurred -%}
-            {%- assign image_key = 'image_' | append: i -%}
-            {%- assign type_key = 'media_type_' | append: i -%}
-            {%- if section.settings[image_key] != blank and section.settings[type_key] == 'image' -%}
-              {{
-                section.settings[image_key]
-                | image_url: width: 1600
-                | image_tag:
-                  width: section.settings[image_key].width,
-                  widths: widths,
-                  height: section.settings[image_key].height,
-                  alt: '',
-                  class: 'hero__media',
-                  sizes: sizes
-              }}
-              {%- assign found_desktop_blurred = true -%}
-            {%- endif -%}
-          {%- endunless -%}
-        {%- endfor -%}
-      {%- endif -%}
-    {%- endif -%}
-  {%- endif -%}
-{% endcapture %}
-
-<div
+<hero-slideshow
   id="Hero-{{ section.id }}"
-  class="hero color-{{ section.settings.color_scheme }}{% if section.blocks.size == 0 and section.settings.section_height == 'auto' %} hero--no-blocks-auto-height{% endif %}{% if section.settings.stack_media_on_mobile %} hero--stack-mobile{% endif %}"
+  class="hero color-{{ section.settings.color_scheme }}"
+  {% if section.settings.autoplay and slide_count > 1 %}data-autoplay="{{ autoplay_ms }}"{% endif %}
   style="
-    --hero-border-style: {{ section.settings.border }};
-    --hero-border-width: {{ section.settings.border_width }}px;
-    --hero-border-opacity: {{ section.settings.border_opacity }}%;
     --blur-opacity: {{ section.settings.reflection_opacity | divided_by: 100.0 }};
     {% if section.settings.section_height == 'custom' %}
       --hero-min-height: {{ section.settings.section_height_custom }}svh;
@@ -329,114 +39,281 @@
       --hero-min-height: var(--section-height-{{ section.settings.section_height }}, 25rem);
     {% endif %}
   "
-  {% if request.visual_preview_mode %}
-    data-shopify-visual-preview
-  {% endif %}
-  {% if section.settings.blurred_reflection and has_only_video == false or has_only_video_mobile == false %}
-    data-blur-shadow="true"
-  {% endif %}
+  {% if request.visual_preview_mode %}data-shopify-visual-preview{% endif %}
 >
-  {% if section.settings.blurred_reflection %}
-    {% unless has_only_video %}
-      <div
-        class="hero__blurred-image hero__blurred-image--desktop"
-      >
-        {{ media_blurred }}
-      </div>
-    {% endunless %}
-    {% if show_mobile_blurred_reflection %}
-      <div
-        class="hero__blurred-image hero__blurred-image--mobile"
-      >
-        {{ mobile_media_blurred }}
-      </div>
-    {% endif %}
-  {% endif %}
+  {%- comment -%} ── Slides track ──────────────────────────────────────────── {%- endcomment -%}
+  <div class="hero__slides-track" data-hero-track>
 
+    {%- assign slide_index = 0 -%}
+    {%- for i in (1..max_slots) -%}
+      {%- assign image_key  = 'image_' | append: i -%}
+      {%- assign video_key  = 'video_' | append: i -%}
+      {%- assign type_key   = 'media_type_' | append: i -%}
+      {%- assign image_key_m = 'image_' | append: i | append: '_mobile' -%}
+      {%- assign video_key_m = 'video_' | append: i | append: '_mobile' -%}
+      {%- assign type_key_m  = 'media_type_' | append: i | append: '_mobile' -%}
+
+      {%- assign desktop_type = 'none' -%}
+      {%- assign mobile_type  = 'none' -%}
+
+      {%- if section.settings[image_key] != blank and section.settings[type_key] == 'image' -%}
+        {%- assign desktop_type = 'image' -%}
+      {%- elsif section.settings[video_key] != blank and section.settings[type_key] == 'video' -%}
+        {%- assign desktop_type = 'video' -%}
+      {%- endif -%}
+
+      {%- if section.settings.custom_mobile_media -%}
+        {%- if section.settings[image_key_m] != blank and section.settings[type_key_m] == 'image' -%}
+          {%- assign mobile_type = 'image' -%}
+        {%- elsif section.settings[video_key_m] != blank and section.settings[type_key_m] == 'video' -%}
+          {%- assign mobile_type = 'video' -%}
+        {%- endif -%}
+      {%- endif -%}
+
+      {%- if desktop_type != 'none' -%}
+        {%- assign slide_index = slide_index | plus: 1 -%}
+        <div
+          class="hero__slide{% if slide_index == 1 %} hero__slide--active{% endif %}"
+          data-hero-slide
+          role="group"
+          aria-roledescription="slide"
+          aria-label="Slide {{ slide_index }} of {{ slide_count }}"
+          {% if slide_index > 1 %}aria-hidden="true"{% endif %}
+        >
+          {%- comment -%} Desktop + mobile art-directed image {%- endcomment -%}
+          {%- if desktop_type == 'image' and mobile_type == 'image' -%}
+            <picture>
+              <source
+                media="(max-width: 749px)"
+                srcset="
+                  {%- for w in mobile_widths_array -%}
+                    {{ section.settings[image_key_m] | image_url: width: w }} {{ w }}w{% unless forloop.last %},{% endunless %}
+                  {%- endfor -%}
+                "
+                sizes="100vw"
+                width="{{ section.settings[image_key_m].width }}"
+                height="{{ section.settings[image_key_m].height }}"
+              >
+              {{
+                section.settings[image_key]
+                | image_url: width: 3840
+                | image_tag:
+                  width: section.settings[image_key].width,
+                  widths: widths,
+                  height: section.settings[image_key].height,
+                  alt: section.settings[image_key].alt,
+                  class: 'hero__media',
+                  sizes: '100vw',
+                  fetchpriority: fetch_priority
+              }}
+            </picture>
+
+          {%- comment -%} Desktop image, no custom mobile {%- endcomment -%}
+          {%- elsif desktop_type == 'image' -%}
+            {{
+              section.settings[image_key]
+              | image_url: width: 3840
+              | image_tag:
+                width: section.settings[image_key].width,
+                widths: widths,
+                height: section.settings[image_key].height,
+                alt: section.settings[image_key].alt,
+                class: 'hero__media',
+                sizes: '100vw',
+                fetchpriority: fetch_priority
+            }}
+
+          {%- comment -%} Desktop video {%- endcomment -%}
+          {%- elsif desktop_type == 'video' -%}
+            {{
+              section.settings[video_key]
+              | video_tag:
+                poster: nil,
+                autoplay: true,
+                loop: true,
+                controls: false,
+                muted: true,
+                class: 'hero__media'
+            }}
+          {%- endif -%}
+
+          {%- if section.settings.toggle_overlay -%}
+            {%- render 'overlay', settings: section.settings -%}
+          {%- endif -%}
+        </div>
+        {%- assign fetch_priority = 'auto' -%}
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- if slide_count == 0 -%}
+      <div class="hero__slide hero__slide--active" data-hero-slide>
+        {{ 'hero-apparel-1' | placeholder_svg_tag: 'hero__media' }}
+      </div>
+    {%- endif -%}
+  </div>
+
+  {%- comment -%} ── Content overlay ───────────────────────────────────────── {%- endcomment -%}
   <div
-    class="hero__container spacing-style section section--full-width"
-    style="{% render 'spacing-style', settings: section.settings %}"
+    class="hero__content-wrapper layout-panel-flex layout-panel-flex--{{ section.settings.content_direction }} {% if section.settings.vertical_on_mobile %}mobile-column{% endif %} {{ section.settings.section_width }} {% if request.design_mode %}hero__content-wrapper--design-mode{% endif %}"
+    style="{% render 'layout-panel-style', settings: section.settings %}"
   >
     {%- if section.settings.link != blank -%}
       <a
         href="{{ section.settings.link }}"
         class="hero__link"
-        {% if section.settings.open_in_new_tab %}
-          target="_blank" rel="noopener"
-        {% endif %}
+        {% if section.settings.open_in_new_tab %}target="_blank" rel="noopener"{% endif %}
       ></a>
     {%- endif -%}
 
-    <div
-      class="hero__media-grid"
-      style="--hero-media-count: {{ media_count }};--hero-media-count-mobile: {{ media_count_mobile }};{%- if section.settings.image_1 != blank -%} --hero-media-aspect-ratio: {{ section.settings.image_1.aspect_ratio }};{%- endif -%}"
-    >
-      {% if section.settings.toggle_overlay %}
-        {% render 'overlay', settings: section.settings %}
-      {% endif %}
-      {{ media }}
-    </div>
-
-    <div
-      class="
-        hero__content-wrapper
-        layout-panel-flex
-        layout-panel-flex--{{ section.settings.content_direction }}
-        {% if section.settings.vertical_on_mobile %}mobile-column{% endif %}
-        section-content-wrapper
-        {{ section.settings.section_width }}
-        {% if request.design_mode %}hero__content-wrapper--design-mode{% endif %}
-      "
-      style="{% render 'layout-panel-style', settings: section.settings %}"
-    >
-      {%- for block in section.blocks -%}
-        {%- case block.type -%}
-          {%- when 'heading' -%}
-            <h2
-              class="hero__heading inline-richtext {{ block.settings.heading_size }}"
-              {{ block.shopify_attributes }}
-            >
-              {{ block.settings.heading }}
-            </h2>
-          {%- when 'text' -%}
-            <div class="hero__text rte {{ block.settings.text_style }}" {{ block.shopify_attributes }}>
-              <p>{{ block.settings.text }}</p>
-            </div>
-          {%- when 'buttons' -%}
-            <div
-              class="hero__buttons{% if block.settings.button_label_1 != blank and block.settings.button_label_2 != blank %} hero__buttons--multiple{% endif %}"
-              {{ block.shopify_attributes }}
-            >
-              {%- if block.settings.button_label_1 != blank -%}
-                <a
-                  {% if block.settings.button_link_1 == blank %}
-                    role="link" aria-disabled="true"
-                  {% else %}
-                    href="{{ block.settings.button_link_1 }}"
-                  {% endif %}
-                  class="button{% if block.settings.button_style_secondary_1 %} button--secondary{% else %} button--primary{% endif %}"
-                >
-                  {{- block.settings.button_label_1 | escape -}}
-                </a>
-              {%- endif -%}
-              {%- if block.settings.button_label_2 != blank -%}
-                <a
-                  {% if block.settings.button_link_2 == blank %}
-                    role="link" aria-disabled="true"
-                  {% else %}
-                    href="{{ block.settings.button_link_2 }}"
-                  {% endif %}
-                  class="button{% if block.settings.button_style_secondary_2 %} button--secondary{% else %} button--primary{% endif %}"
-                >
-                  {{- block.settings.button_label_2 | escape -}}
-                </a>
-              {%- endif -%}
-            </div>
-        {%- endcase -%}
-      {%- endfor -%}
-    </div>
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'heading' -%}
+          <h2 class="hero__heading inline-richtext {{ block.settings.heading_size }}" {{ block.shopify_attributes }}>
+            {{ block.settings.heading }}
+          </h2>
+        {%- when 'text' -%}
+          <div class="hero__text rte {{ block.settings.text_style }}" {{ block.shopify_attributes }}>
+            <p>{{ block.settings.text }}</p>
+          </div>
+        {%- when 'buttons' -%}
+          <div
+            class="hero__buttons{% if block.settings.button_label_1 != blank and block.settings.button_label_2 != blank %} hero__buttons--multiple{% endif %}"
+            {{ block.shopify_attributes }}
+          >
+            {%- if block.settings.button_label_1 != blank -%}
+              <a
+                {% if block.settings.button_link_1 == blank %}role="link" aria-disabled="true"{% else %}href="{{ block.settings.button_link_1 }}"{% endif %}
+                class="button{% if block.settings.button_style_secondary_1 %} button--secondary{% else %} button--primary{% endif %}"
+              >
+                {{- block.settings.button_label_1 | escape -}}
+              </a>
+            {%- endif -%}
+            {%- if block.settings.button_label_2 != blank -%}
+              <a
+                {% if block.settings.button_link_2 == blank %}role="link" aria-disabled="true"{% else %}href="{{ block.settings.button_link_2 }}"{% endif %}
+                class="button{% if block.settings.button_style_secondary_2 %} button--secondary{% else %} button--primary{% endif %}"
+              >
+                {{- block.settings.button_label_2 | escape -}}
+              </a>
+            {%- endif -%}
+          </div>
+      {%- endcase -%}
+    {%- endfor -%}
   </div>
-</div>
+
+  {%- comment -%} ── Slideshow controls (only when >1 slide) ─────────────────── {%- endcomment -%}
+  {%- if slide_count > 1 -%}
+    {%- if section.settings.show_arrows -%}
+      <button class="hero__nav-btn hero__nav-btn--prev" data-hero-prev aria-label="Previous slide">
+        <span class="svg-wrapper">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path d="M12.5 15L7.5 10L12.5 5"/>
+          </svg>
+        </span>
+      </button>
+      <button class="hero__nav-btn hero__nav-btn--next" data-hero-next aria-label="Next slide">
+        <span class="svg-wrapper">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path d="M7.5 15L12.5 10L7.5 5"/>
+          </svg>
+        </span>
+      </button>
+    {%- endif -%}
+
+    {%- if section.settings.show_dots -%}
+      <div class="hero__dots" role="tablist" data-hero-dots>
+        {%- for i in (1..slide_count) -%}
+          <button
+            class="hero__dot{% if forloop.first %} hero__dot--active{% endif %}"
+            data-hero-dot="{{ forloop.index0 }}"
+            role="tab"
+            aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+            aria-label="Slide {{ i }}"
+          ></button>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  {%- endif -%}
+</hero-slideshow>
+
+<script>
+  (() => {
+    if (customElements.get('hero-slideshow')) return;
+
+    class HeroSlideshow extends HTMLElement {
+      connectedCallback() {
+        this._current = 0;
+        this._slides = Array.from(this.querySelectorAll('[data-hero-slide]'));
+        this._dots   = Array.from(this.querySelectorAll('[data-hero-dot]'));
+        this._track  = this.querySelector('[data-hero-track]');
+
+        this.querySelector('[data-hero-prev]')
+          ?.addEventListener('click', () => this._step(-1));
+        this.querySelector('[data-hero-next]')
+          ?.addEventListener('click', () => this._step(1));
+
+        this._dots.forEach(dot => {
+          dot.addEventListener('click', () => this._goTo(parseInt(dot.dataset.heroDot)));
+        });
+
+        const ms = parseInt(this.dataset.autoplay);
+        if (ms > 0 && this._slides.length > 1) {
+          this._startAutoplay(ms);
+          this.addEventListener('mouseenter', () => this._stopAutoplay());
+          this.addEventListener('mouseleave', () => this._startAutoplay(ms));
+          this.addEventListener('focusin',    () => this._stopAutoplay());
+          this.addEventListener('focusout',   () => this._startAutoplay(ms));
+        }
+
+        // Keyboard navigation
+        this.addEventListener('keydown', (e) => {
+          if (e.key === 'ArrowLeft')  this._step(-1);
+          if (e.key === 'ArrowRight') this._step(1);
+        });
+      }
+
+      disconnectedCallback() {
+        this._stopAutoplay();
+      }
+
+      _goTo(index) {
+        const total = this._slides.length;
+        const next  = ((index % total) + total) % total;
+        const prev  = this._current;
+
+        if (next === prev) return;
+
+        this._slides[prev].classList.remove('hero__slide--active');
+        this._slides[prev].setAttribute('aria-hidden', 'true');
+
+        this._slides[next].classList.add('hero__slide--active');
+        this._slides[next].removeAttribute('aria-hidden');
+
+        this._dots.forEach((dot, i) => {
+          dot.classList.toggle('hero__dot--active', i === next);
+          dot.setAttribute('aria-selected', i === next ? 'true' : 'false');
+        });
+
+        this._current = next;
+      }
+
+      _step(dir) {
+        this._goTo(this._current + dir);
+      }
+
+      _startAutoplay(ms) {
+        this._stopAutoplay();
+        this._timer = setInterval(() => this._step(1), ms);
+      }
+
+      _stopAutoplay() {
+        clearInterval(this._timer);
+      }
+    }
+
+    customElements.define('hero-slideshow', HeroSlideshow);
+  })();
+</script>
 
 {% stylesheet %}
   :root {
@@ -472,127 +349,73 @@
     --hero-height-offset: var(--header-group-height, 0);
   }
 
-  .hero {
+  hero-slideshow {
+    display: block;
     position: relative;
-    min-height: calc(var(--hero-min-height) - var(--hero-height-offset));
+    overflow: hidden;
+    min-height: calc(var(--hero-min-height, 25rem) - var(--hero-height-offset, 0px));
   }
 
-  .hero[data-shopify-visual-preview] {
+  hero-slideshow[data-shopify-visual-preview] {
     --hero-min-height: 600px;
     min-height: 600px;
   }
 
-  .hero__container {
-    position: relative;
-    overflow: hidden;
-    border: var(--hero-border-width, 0) var(--hero-border-style, none) rgb(var(--color-border-rgb, 0 0 0) / var(--hero-border-opacity, 0%));
-    min-height: inherit;
-    align-items: var(--vertical-alignment-mobile, center);
-    justify-content: var(--horizontal-alignment, flex-start);
-    z-index: var(--layer-base);
-
-    @media screen and (min-width: 750px) {
-      align-items: var(--vertical-alignment, center);
-    }
-  }
-
-  .hero__content-wrapper.page-width {
-    grid-column: 2 / 3;
-  }
-
-  .hero__content-wrapper {
-    position: relative;
-    inset: 0;
-    z-index: var(--layer-flat);
-  }
-
-  .hero__media-grid {
+  /* ── Track & slides ──────────────────────────────── */
+  .hero__slides-track {
     position: absolute;
     inset: 0;
-    display: grid;
-    grid-column: 1 / -1;
-    grid-template-columns: repeat(var(--hero-media-count, 1), 1fr);
+    width: 100%;
+    height: 100%;
   }
 
-  .hero--auto .hero__media {
-    aspect-ratio: var(--hero-media-aspect-ratio);
+  .hero__slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    pointer-events: none;
   }
 
-  .hero--no-blocks-auto-height {
-    .hero__media {
-      width: 100%;
-      aspect-ratio: auto;
-    }
-
-    .hero__media-grid {
-      position: relative;
-    }
-  }
-
-  .hero__media-wrapper {
-    overflow: hidden;
-    position: relative;
+  .hero__slide--active {
+    opacity: 1;
+    pointer-events: auto;
   }
 
   .hero__media {
-    height: 100%;
     width: 100%;
+    height: 100%;
     object-fit: cover;
     object-position: center center;
-    overflow: hidden;
-    position: relative;
-    z-index: var(--layer-base);
-  }
-
-  .hero__media-wrapper--mobile {
-    display: none;
-  }
-
-  .hero__media-wrapper--desktop {
     display: block;
   }
 
-  @media screen and (max-width: 749px) {
-    .hero__media-wrapper--desktop {
-      display: none;
-    }
+  .hero__slide picture {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
 
-    .hero__media-wrapper--mobile {
-      display: block;
-    }
+  /* ── Content wrapper ─────────────────────────────── */
+  .hero__content-wrapper {
+    position: relative;
+    z-index: var(--layer-flat);
+    min-height: inherit;
+    padding-block: var(--padding-block-start, 0) var(--padding-block-end, 0);
+  }
 
-    .hero__media-grid {
-      grid-template-columns: repeat(var(--hero-media-count-mobile, 1), 1fr);
-    }
-
-    .hero--stack-mobile .hero__media-grid {
-      grid-template-columns: 1fr;
-      grid-template-rows: repeat(var(--hero-media-count-mobile, 1), calc(100% / var(--hero-media-count-mobile, 1)));
-    }
+  .hero__content-wrapper.page-width {
+    margin-inline: auto;
   }
 
   .hero__link {
     position: absolute;
     inset: 0;
-    grid-column: 1 / -1;
-  }
-
-  .hero__media-grid,
-  .hero__content-wrapper {
-    pointer-events: none;
-
-    :is(a, button, input, textarea, select, details, summary) {
-      pointer-events: auto;
-    }
-  }
-
-  .hero__content-wrapper--design-mode * {
-    pointer-events: auto;
+    z-index: var(--layer-raised);
   }
 
   .hero__heading,
-  .hero__text,
-  .hero__buttons {
+  .hero__text {
     color: inherit;
   }
 
@@ -622,80 +445,76 @@
     }
   }
 
-  .hero[data-blur-shadow='true'] {
-    --blurred-reflection-filter-saturate: saturate(1.5);
-    --blurred-reflection-mask-image: linear-gradient(to bottom, #000 0%, #000 60%, transparent 100%);
-    --blurred-reflection-box-shadow: rgb(0 0 0 / 5%) 0 0 1rem;
-    --blurred-reflection-filter-blur: blur(20px);
-    --blurred-reflection-scale: scale(2, 1.25);
-    --blurred-reflection-padding-block-end: 60px;
+  .hero__content-wrapper--design-mode * {
+    pointer-events: auto;
   }
 
-  .hero[data-blur-shadow='true'] .hero__container::before {
-    content: '';
+  /* ── Prev / Next arrows ─────────────────────────── */
+  .hero__nav-btn {
     position: absolute;
-    inset: 0;
-    box-shadow: var(--blurred-reflection-box-shadow);
-    mix-blend-mode: overlay;
-    pointer-events: none;
-    z-index: -1;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: var(--layer-raised);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.6rem;
+    height: 3.6rem;
+    padding: 0;
+    background: rgb(var(--color-background-rgb, 255 255 255) / 0.7);
+    border: 0.1rem solid rgb(var(--color-border-rgb, 0 0 0) / 0.2);
+    border-radius: 50%;
+    cursor: pointer;
+    color: rgb(var(--color-foreground-rgb, 0 0 0));
+    transition: background 0.2s, border-color 0.2s;
   }
 
-  .hero__blurred-image {
+  .hero__nav-btn:hover {
+    background: rgb(var(--color-background-rgb, 255 255 255) / 0.95);
+  }
+
+  .hero__nav-btn--prev { left: 1.5rem; }
+  .hero__nav-btn--next { right: 1.5rem; }
+
+  .hero__nav-btn .svg-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ── Dot indicators ─────────────────────────────── */
+  .hero__dots {
     position: absolute;
-    inset: 0;
-    z-index: -1;
-    mask-image: var(--blurred-reflection-mask-image);
-    filter: var(--blurred-reflection-filter-saturate);
-    pointer-events: none;
-    transform: translateY(50%);
-    overflow: hidden;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: var(--layer-raised);
+    display: flex;
+    gap: 0.6rem;
   }
 
-  .hero__blurred-image--desktop {
-    display: none;
-
-    @media screen and (min-width: 750px) {
-      display: block;
-    }
+  .hero__dot {
+    width: 0.8rem;
+    height: 0.8rem;
+    padding: 0;
+    border-radius: 50%;
+    border: 0.15rem solid currentColor;
+    background: transparent;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: opacity 0.2s, background 0.2s;
+    color: rgb(var(--color-background-rgb, 255 255 255));
   }
 
-  .hero__blurred-image--mobile {
-    display: block;
-
-    @media screen and (min-width: 750px) {
-      display: none;
-    }
+  .hero__dot--active {
+    background: currentColor;
+    opacity: 1;
   }
 
-  .hero__blurred-image img,
-  .hero__blurred-image svg {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center center;
-    filter: var(--blurred-reflection-filter-blur);
-    opacity: var(--blur-opacity);
-    transform: var(--blurred-reflection-scale);
-    padding-block-end: var(--blurred-reflection-padding-block-end);
-
-    &:not(:only-child) {
-      width: calc(100% / var(--hero-media-count, 1));
-
-      &:last-child {
-        right: 0;
-        left: auto;
-      }
-    }
-  }
-
+  /* ── Spacing style passthrough ───────────────────── */
   .spacing-style {
     padding-block-start: var(--padding-block-start, 0);
     padding-block-end: var(--padding-block-end, 0);
-    padding-inline-start: var(--padding-inline-start, 0);
-    padding-inline-end: var(--padding-inline-end, 0);
   }
 {% endstylesheet %}
 
@@ -742,7 +561,7 @@
         {
           "type": "inline_richtext",
           "id": "text",
-          "default": "Give customers details about the banner image(s) or content on this page.",
+          "default": "Tell your story and give customers insight into your brand.",
           "label": "Description"
         },
         {
@@ -972,15 +791,10 @@
     },
     {
       "type": "checkbox",
-      "id": "stack_media_on_mobile",
-      "label": "Stack images on mobile",
-      "default": false
-    },
-    {
-      "type": "checkbox",
       "id": "custom_mobile_media",
-      "label": "Use separate mobile images",
-      "default": false
+      "label": "Use separate images for mobile",
+      "default": false,
+      "info": "Each mobile image pairs with the desktop image of the same number."
     },
     {
       "type": "header",
@@ -1152,6 +966,39 @@
     },
     {
       "type": "header",
+      "content": "Slideshow"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show prev / next arrows",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dots",
+      "label": "Show dot indicators",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Auto-advance slides",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "label": "Seconds between slides",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "default": 5,
+      "visible_if": "{{ section.settings.autoplay }}"
+    },
+    {
+      "type": "header",
       "content": "Section link"
     },
     {
@@ -1268,7 +1115,6 @@
       "id": "section_height",
       "label": "Section height",
       "options": [
-        { "value": "auto", "label": "Auto" },
         { "value": "small", "label": "Small" },
         { "value": "medium", "label": "Medium" },
         { "value": "large", "label": "Large" },
@@ -1281,7 +1127,7 @@
       "type": "range",
       "id": "section_height_custom",
       "label": "Custom height",
-      "min": 0,
+      "min": 10,
       "max": 100,
       "step": 1,
       "default": 50,
@@ -1334,58 +1180,6 @@
       "visible_if": "{{ section.settings.toggle_overlay and section.settings.overlay_style == 'gradient' }}"
     },
     {
-      "type": "checkbox",
-      "id": "blurred_reflection",
-      "label": "Show blurred reflection",
-      "default": false,
-      "info": "Applies to images only"
-    },
-    {
-      "type": "range",
-      "id": "reflection_opacity",
-      "label": "Reflection opacity",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "%",
-      "default": 75,
-      "visible_if": "{{ section.settings.blurred_reflection }}"
-    },
-    {
-      "type": "select",
-      "id": "border",
-      "label": "Border style",
-      "options": [
-        { "value": "none", "label": "None" },
-        { "value": "solid", "label": "Solid" },
-        { "value": "dashed", "label": "Dashed" },
-        { "value": "dotted", "label": "Dotted" }
-      ],
-      "default": "none"
-    },
-    {
-      "type": "range",
-      "id": "border_width",
-      "label": "Border width",
-      "min": 1,
-      "max": 10,
-      "step": 1,
-      "unit": "px",
-      "default": 1,
-      "visible_if": "{{ section.settings.border != 'none' }}"
-    },
-    {
-      "type": "range",
-      "id": "border_opacity",
-      "label": "Border opacity",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "%",
-      "default": 100,
-      "visible_if": "{{ section.settings.border != 'none' }}"
-    },
-    {
       "type": "header",
       "content": "Padding"
     },
@@ -1397,7 +1191,7 @@
       "max": 100,
       "step": 1,
       "unit": "px",
-      "default": 0
+      "default": 40
     },
     {
       "type": "range",
@@ -1407,7 +1201,7 @@
       "max": 100,
       "step": 1,
       "unit": "px",
-      "default": 0
+      "default": 40
     }
   ],
   "presets": [
@@ -1439,6 +1233,10 @@
       "settings": {
         "section_height": "large",
         "color_scheme": "scheme-1",
+        "show_arrows": true,
+        "show_dots": true,
+        "autoplay": false,
+        "autoplay_speed": 5,
         "toggle_overlay": true,
         "overlay_style": "gradient",
         "padding-block-start": 40,

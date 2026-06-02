@@ -171,6 +171,28 @@
       "name": "divider",
       "settings": {}
     },
+    "company_usps_ihTRza": {
+      "type": "company-usps",
+      "name": "Company USPs",
+      "settings": {
+        "color_scheme": "",
+        "icon_size": 40,
+        "usp1_icon": "chat_bubble",
+        "usp1_heading": "24/7 Support",
+        "usp1_subtext": "We're here when you need us",
+        "usp2_icon": "star",
+        "usp2_heading": "Premium Quality",
+        "usp2_subtext": "Ethically made, built to last",
+        "usp3_icon": "truck",
+        "usp3_heading": "Fast Dispatch",
+        "usp3_subtext": "Orders shipped within 24 hours",
+        "usp4_icon": "check_box",
+        "usp4_heading": "12 Month Warranty",
+        "usp4_subtext": "Peace of mind with every purchase",
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
     "1776429765aba803c0": {
       "type": "apps",
       "blocks": {
@@ -283,6 +305,101 @@
         "padding_top": 40,
         "padding_bottom": 40
       }
+    },
+    "usp_strip_bJRxBj": {
+      "type": "usp-strip",
+      "blocks": {
+        "usp_item_xRpidY": {
+          "type": "usp_item",
+          "settings": {
+            "text": "Free UK delivery on orders over £100",
+            "icon": "truck",
+            "separator": "·"
+          }
+        },
+        "usp_item_c3aVtr": {
+          "type": "usp_item",
+          "settings": {
+            "text": "Secure Checkout",
+            "icon": "star",
+            "separator": "·"
+          }
+        },
+        "usp_item_r7hKAH": {
+          "type": "usp_item",
+          "settings": {
+            "text": "Free UK Returns within 15 days",
+            "icon": "return",
+            "separator": "·"
+          }
+        }
+      },
+      "block_order": [
+        "usp_item_xRpidY",
+        "usp_item_c3aVtr",
+        "usp_item_r7hKAH"
+      ],
+      "name": "USP Strip",
+      "settings": {
+        "color_scheme": "",
+        "direction": "reverse",
+        "icon_size": 18,
+        "item_gap": 40,
+        "padding_top": 16,
+        "padding_bottom": 16
+      }
+    },
+    "usp_strip_nMCAqk": {
+      "type": "usp-strip",
+      "blocks": {
+        "usp_item_3hajx3": {
+          "type": "usp_item",
+          "settings": {
+            "text": "Free shipping over £50",
+            "icon": "truck",
+            "separator": "·"
+          }
+        },
+        "usp_item_CUtWFK": {
+          "type": "usp_item",
+          "settings": {
+            "text": "Easy returns",
+            "icon": "return",
+            "separator": "·"
+          }
+        },
+        "usp_item_jyiiQf": {
+          "type": "usp_item",
+          "settings": {
+            "text": "Premium quality",
+            "icon": "star",
+            "separator": "·"
+          }
+        },
+        "usp_item_FeNa6h": {
+          "type": "usp_item",
+          "settings": {
+            "text": "24/7 Support",
+            "icon": "chat_bubble",
+            "separator": "·"
+          }
+        }
+      },
+      "block_order": [
+        "usp_item_3hajx3",
+        "usp_item_CUtWFK",
+        "usp_item_jyiiQf",
+        "usp_item_FeNa6h"
+      ],
+      "name": "USP Strip",
+      "settings": {
+        "color_scheme": "",
+        "direction": "reverse",
+        "icon_size": 18,
+        "item_gap": 40,
+        "padding_top": 16,
+        "padding_bottom": 16
+      }
     }
   },
   "order": [
@@ -290,9 +407,12 @@
     "featured_collection",
     "multirow_T73QJU",
     "17764328313abd5f70",
+    "company_usps_ihTRza",
     "1776429765aba803c0",
     "custom_liquid_bnWKD3",
     "blocks_6CnLki",
-    "c2a_trustmetrics_eMtphV"
+    "c2a_trustmetrics_eMtphV",
+    "usp_strip_bJRxBj",
+    "usp_strip_nMCAqk"
   ]
 }

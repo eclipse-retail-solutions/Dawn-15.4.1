@@ -1,6 +1,6 @@
 
 <script
-  src="{{ 'marquee.js' | asset_url }}"
+  src="{{ 'usp-marquee.js' | asset_url }}"
   type="module"
   fetchpriority="low"
 ></script>
@@ -12,27 +12,17 @@
     padding-block-end: {{ section.settings.padding_bottom }}px;
   "
 >
-  <marquee-component
+  <usp-marquee
     class="usp-strip__marquee"
     style="
       --marquee-gap: {{ section.settings.item_gap }}px;
       --marquee-direction: {{ section.settings.direction }};
     "
     data-speed-factor="25"
-    data-movement-direction="{{ section.settings.direction }}"
   >
-    <div
-      class="usp-strip__wrapper"
-      ref="wrapper"
-    >
-      <div
-        class="usp-strip__content"
-        ref="content"
-      >
-        <div
-          class="usp-strip__items"
-          ref="marqueeItems[]"
-        >
+    <div class="usp-strip__wrapper" data-wrapper>
+      <div class="usp-strip__content" data-content>
+        <div class="usp-strip__items" data-items>
           {% for block in section.blocks %}
             <div class="usp-strip__item" {{ block.shopify_attributes }}>
               {%- if block.settings.icon != 'none' and block.settings.image == blank -%}
@@ -66,15 +56,11 @@
         </div>
       </div>
     </div>
-  </marquee-component>
+  </usp-marquee>
 </div>
 
 {% stylesheet %}
-  .usp-strip {
-    overflow: hidden;
-  }
-
-  .usp-strip__marquee {
+  usp-marquee {
     display: block;
     width: 100%;
     overflow: hidden;
@@ -101,12 +87,12 @@
   }
 
   @media (prefers-reduced-motion: no-preference) {
-    .usp-strip__marquee:not([data-disabled]) .usp-strip__wrapper {
-      animation: usp-strip-motion var(--marquee-speed) linear infinite var(--marquee-direction);
+    usp-marquee .usp-strip__wrapper {
+      animation: usp-marquee-scroll var(--marquee-speed) linear infinite var(--marquee-direction);
     }
   }
 
-  @keyframes usp-strip-motion {
+  @keyframes usp-marquee-scroll {
     to {
       transform: translate3d(calc(-50% - (var(--marquee-gap) / 2)), 0, 0);
     }

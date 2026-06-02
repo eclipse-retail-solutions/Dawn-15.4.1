@@ -61,8 +61,8 @@
         "text_link_1": {
           "type": "text_link",
           "settings": {
-            "bold_text": "FAST",
-            "text": "UK & Ireland Delivery",
+            "bold_text": "FREE",
+            "text": "UK Delivery on Orders of £100 and over",
             "link": "/delivery"
           }
         },
@@ -88,7 +88,7 @@
         "klarna_placement_1"
       ],
       "custom_css": [
-        "#cta_top-banner{background: #303030}"
+        "#cta_top-banner {background: #303030;}"
       ],
       "settings": {
         "color_scheme": "scheme-3",

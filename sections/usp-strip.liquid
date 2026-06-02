@@ -1,0 +1,293 @@
+
+<script
+  src="{{ 'marquee.js' | asset_url }}"
+  type="module"
+  fetchpriority="low"
+></script>
+
+<div
+  class="usp-strip color-{{ section.settings.color_scheme }} isolate gradient"
+  style="
+    padding-block-start: {{ section.settings.padding_top }}px;
+    padding-block-end: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <marquee-component
+    class="usp-strip__marquee"
+    style="
+      --marquee-gap: {{ section.settings.item_gap }}px;
+      --marquee-direction: {{ section.settings.direction }};
+    "
+    data-speed-factor="25"
+    data-movement-direction="{{ section.settings.direction }}"
+  >
+    <div
+      class="usp-strip__wrapper"
+      ref="wrapper"
+    >
+      <div
+        class="usp-strip__content"
+        ref="content"
+      >
+        <div
+          class="usp-strip__items"
+          ref="marqueeItems[]"
+        >
+          {% for block in section.blocks %}
+            <div class="usp-strip__item" {{ block.shopify_attributes }}>
+              {%- if block.settings.icon != 'none' and block.settings.image == blank -%}
+                <svg
+                  class="usp-strip__icon"
+                  aria-hidden="true"
+                  focusable="false"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="{{ section.settings.icon_size }}"
+                  height="{{ section.settings.icon_size }}"
+                  viewBox="0 0 20 20"
+                >
+                  {%- render 'icon', icon: block.settings.icon -%}
+                </svg>
+              {%- elsif block.settings.image != blank -%}
+                {%- assign icon_style = 'width: ' | append: section.settings.icon_size | append: 'px; height: auto;' -%}
+                {{
+                  block.settings.image
+                  | image_url: width: 160
+                  | image_tag: class: 'usp-strip__icon', style: icon_style, loading: 'lazy'
+                }}
+              {%- endif -%}
+              {%- if block.settings.text != blank -%}
+                <span class="usp-strip__text">{{ block.settings.text }}</span>
+              {%- endif -%}
+              {%- if block.settings.separator != blank -%}
+                <span class="usp-strip__separator" aria-hidden="true">{{ block.settings.separator }}</span>
+              {%- endif -%}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </marquee-component>
+</div>
+
+{% stylesheet %}
+  .usp-strip {
+    overflow: hidden;
+  }
+
+  .usp-strip__marquee {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .usp-strip__wrapper {
+    display: flex;
+    gap: var(--marquee-gap);
+    width: fit-content;
+    white-space: nowrap;
+  }
+
+  .usp-strip__content {
+    min-width: max-content;
+    display: flex;
+    gap: var(--marquee-gap);
+  }
+
+  .usp-strip__items {
+    min-width: max-content;
+    display: flex;
+    gap: var(--marquee-gap);
+    align-items: center;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .usp-strip__marquee:not([data-disabled]) .usp-strip__wrapper {
+      animation: usp-strip-motion var(--marquee-speed) linear infinite var(--marquee-direction);
+    }
+  }
+
+  @keyframes usp-strip-motion {
+    to {
+      transform: translate3d(calc(-50% - (var(--marquee-gap) / 2)), 0, 0);
+    }
+  }
+
+  .usp-strip__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    white-space: nowrap;
+  }
+
+  .usp-strip__icon {
+    flex-shrink: 0;
+    color: currentColor;
+  }
+
+  .usp-strip__text {
+    font-size: 1.4rem;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  .usp-strip__separator {
+    font-size: 1.4rem;
+    margin-inline-start: calc(var(--marquee-gap) - 0.6rem);
+    opacity: 0.5;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "USP Strip",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Colour scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "direction",
+      "label": "Scroll direction",
+      "options": [
+        { "value": "reverse", "label": "Forward" },
+        { "value": "normal", "label": "Reverse" }
+      ],
+      "default": "reverse"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Icon size",
+      "min": 12,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "item_gap",
+      "label": "Gap between items",
+      "min": 8,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "default": 16
+    }
+  ],
+  "blocks": [
+    {
+      "type": "usp_item",
+      "name": "USP item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Free shipping over £50"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "chat_bubble", "label": "Chat bubble" },
+            { "value": "heart", "label": "Heart" },
+            { "value": "star", "label": "Star" },
+            { "value": "lock", "label": "Lock" },
+            { "value": "check_box", "label": "Check box" },
+            { "value": "map_pin", "label": "Map pin" },
+            { "value": "truck", "label": "Truck" },
+            { "value": "return", "label": "Return" },
+            { "value": "leaf", "label": "Leaf" },
+            { "value": "recycle", "label": "Recycle" },
+            { "value": "stopwatch", "label": "Stopwatch" },
+            { "value": "price_tag", "label": "Price tag" },
+            { "value": "plane", "label": "Plane" }
+          ],
+          "default": "truck"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Custom icon image"
+        },
+        {
+          "type": "text",
+          "id": "separator",
+          "label": "Separator (shown after this item)",
+          "default": "·",
+          "info": "Leave blank to show no separator after this item."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "USP Strip",
+      "blocks": [
+        {
+          "type": "usp_item",
+          "settings": {
+            "text": "Free shipping over £50",
+            "icon": "truck",
+            "separator": "·"
+          }
+        },
+        {
+          "type": "usp_item",
+          "settings": {
+            "text": "Easy returns",
+            "icon": "return",
+            "separator": "·"
+          }
+        },
+        {
+          "type": "usp_item",
+          "settings": {
+            "text": "Premium quality",
+            "icon": "star",
+            "separator": "·"
+          }
+        },
+        {
+          "type": "usp_item",
+          "settings": {
+            "text": "24/7 Support",
+            "icon": "chat_bubble",
+            "separator": "·"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

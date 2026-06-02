@@ -1,0 +1,357 @@
+
+{% assign s = section.settings %}
+
+<div
+  class="company-usps color-{{ s.color_scheme }} isolate gradient"
+  style="
+    padding-block-start: {{ s.padding_top }}px;
+    padding-block-end: {{ s.padding_bottom }}px;
+  "
+>
+  <div class="company-usps__inner page-width">
+
+    <div class="company-usps__grid">
+
+      <div class="company-usps__item">
+        {% render 'icon-or-image',
+          icon: s.usp1_icon,
+          image_upload: s.usp1_image,
+          width: s.icon_size,
+          class_name: 'company-usps__icon'
+        %}
+        <div class="company-usps__text">
+          {%- if s.usp1_heading != blank -%}
+            <p class="company-usps__heading">{{ s.usp1_heading }}</p>
+          {%- endif -%}
+          {%- if s.usp1_subtext != blank -%}
+            <p class="company-usps__subtext">{{ s.usp1_subtext }}</p>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <div class="company-usps__item">
+        {% render 'icon-or-image',
+          icon: s.usp2_icon,
+          image_upload: s.usp2_image,
+          width: s.icon_size,
+          class_name: 'company-usps__icon'
+        %}
+        <div class="company-usps__text">
+          {%- if s.usp2_heading != blank -%}
+            <p class="company-usps__heading">{{ s.usp2_heading }}</p>
+          {%- endif -%}
+          {%- if s.usp2_subtext != blank -%}
+            <p class="company-usps__subtext">{{ s.usp2_subtext }}</p>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <div class="company-usps__item">
+        {% render 'icon-or-image',
+          icon: s.usp3_icon,
+          image_upload: s.usp3_image,
+          width: s.icon_size,
+          class_name: 'company-usps__icon'
+        %}
+        <div class="company-usps__text">
+          {%- if s.usp3_heading != blank -%}
+            <p class="company-usps__heading">{{ s.usp3_heading }}</p>
+          {%- endif -%}
+          {%- if s.usp3_subtext != blank -%}
+            <p class="company-usps__subtext">{{ s.usp3_subtext }}</p>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <div class="company-usps__item">
+        {% render 'icon-or-image',
+          icon: s.usp4_icon,
+          image_upload: s.usp4_image,
+          width: s.icon_size,
+          class_name: 'company-usps__icon'
+        %}
+        <div class="company-usps__text">
+          {%- if s.usp4_heading != blank -%}
+            <p class="company-usps__heading">{{ s.usp4_heading }}</p>
+          {%- endif -%}
+          {%- if s.usp4_subtext != blank -%}
+            <p class="company-usps__subtext">{{ s.usp4_subtext }}</p>
+          {%- endif -%}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .company-usps__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 3rem;
+  }
+
+  @media screen and (max-width: 749px) {
+    .company-usps__grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+  }
+
+  .company-usps__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .company-usps__icon {
+    color: currentColor;
+  }
+
+  .company-usps__text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .company-usps__heading {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .company-usps__subtext {
+    margin: 0;
+    font-size: 1.4rem;
+    color: rgba(var(--color-foreground), 0.75);
+    line-height: 1.4;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Company USPs",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Colour scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Icon size",
+      "min": 24,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "USP 1 — Customer support"
+    },
+    {
+      "type": "select",
+      "id": "usp1_icon",
+      "label": "Icon",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "chat_bubble", "label": "Chat bubble" },
+        { "value": "heart", "label": "Heart" },
+        { "value": "star", "label": "Star" },
+        { "value": "lock", "label": "Lock" },
+        { "value": "check_box", "label": "Check box" },
+        { "value": "map_pin", "label": "Map pin" },
+        { "value": "truck", "label": "Truck" },
+        { "value": "return", "label": "Return" },
+        { "value": "leaf", "label": "Leaf" },
+        { "value": "recycle", "label": "Recycle" },
+        { "value": "stopwatch", "label": "Stopwatch" },
+        { "value": "price_tag", "label": "Price tag" },
+        { "value": "plane", "label": "Plane" }
+      ],
+      "default": "chat_bubble"
+    },
+    {
+      "type": "image_picker",
+      "id": "usp1_image",
+      "label": "Custom icon image"
+    },
+    {
+      "type": "text",
+      "id": "usp1_heading",
+      "label": "Heading",
+      "default": "24/7 Support"
+    },
+    {
+      "type": "text",
+      "id": "usp1_subtext",
+      "label": "Subtext",
+      "default": "We're here when you need us"
+    },
+    {
+      "type": "header",
+      "content": "USP 2 — Product differentiator"
+    },
+    {
+      "type": "select",
+      "id": "usp2_icon",
+      "label": "Icon",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "chat_bubble", "label": "Chat bubble" },
+        { "value": "heart", "label": "Heart" },
+        { "value": "star", "label": "Star" },
+        { "value": "lock", "label": "Lock" },
+        { "value": "check_box", "label": "Check box" },
+        { "value": "map_pin", "label": "Map pin" },
+        { "value": "truck", "label": "Truck" },
+        { "value": "return", "label": "Return" },
+        { "value": "leaf", "label": "Leaf" },
+        { "value": "recycle", "label": "Recycle" },
+        { "value": "stopwatch", "label": "Stopwatch" },
+        { "value": "price_tag", "label": "Price tag" },
+        { "value": "plane", "label": "Plane" }
+      ],
+      "default": "star"
+    },
+    {
+      "type": "image_picker",
+      "id": "usp2_image",
+      "label": "Custom icon image"
+    },
+    {
+      "type": "text",
+      "id": "usp2_heading",
+      "label": "Heading",
+      "default": "Premium Quality"
+    },
+    {
+      "type": "text",
+      "id": "usp2_subtext",
+      "label": "Subtext",
+      "default": "Ethically made, built to last"
+    },
+    {
+      "type": "header",
+      "content": "USP 3 — Delivery"
+    },
+    {
+      "type": "select",
+      "id": "usp3_icon",
+      "label": "Icon",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "chat_bubble", "label": "Chat bubble" },
+        { "value": "heart", "label": "Heart" },
+        { "value": "star", "label": "Star" },
+        { "value": "lock", "label": "Lock" },
+        { "value": "check_box", "label": "Check box" },
+        { "value": "map_pin", "label": "Map pin" },
+        { "value": "truck", "label": "Truck" },
+        { "value": "return", "label": "Return" },
+        { "value": "leaf", "label": "Leaf" },
+        { "value": "recycle", "label": "Recycle" },
+        { "value": "stopwatch", "label": "Stopwatch" },
+        { "value": "price_tag", "label": "Price tag" },
+        { "value": "plane", "label": "Plane" }
+      ],
+      "default": "truck"
+    },
+    {
+      "type": "image_picker",
+      "id": "usp3_image",
+      "label": "Custom icon image"
+    },
+    {
+      "type": "text",
+      "id": "usp3_heading",
+      "label": "Heading",
+      "default": "Fast Dispatch"
+    },
+    {
+      "type": "text",
+      "id": "usp3_subtext",
+      "label": "Subtext",
+      "default": "Orders shipped within 24 hours"
+    },
+    {
+      "type": "header",
+      "content": "USP 4 — Warranty"
+    },
+    {
+      "type": "select",
+      "id": "usp4_icon",
+      "label": "Icon",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "chat_bubble", "label": "Chat bubble" },
+        { "value": "heart", "label": "Heart" },
+        { "value": "star", "label": "Star" },
+        { "value": "lock", "label": "Lock" },
+        { "value": "check_box", "label": "Check box" },
+        { "value": "map_pin", "label": "Map pin" },
+        { "value": "truck", "label": "Truck" },
+        { "value": "return", "label": "Return" },
+        { "value": "leaf", "label": "Leaf" },
+        { "value": "recycle", "label": "Recycle" },
+        { "value": "stopwatch", "label": "Stopwatch" },
+        { "value": "price_tag", "label": "Price tag" },
+        { "value": "plane", "label": "Plane" }
+      ],
+      "default": "check_box"
+    },
+    {
+      "type": "image_picker",
+      "id": "usp4_image",
+      "label": "Custom icon image"
+    },
+    {
+      "type": "text",
+      "id": "usp4_heading",
+      "label": "Heading",
+      "default": "12 Month Warranty"
+    },
+    {
+      "type": "text",
+      "id": "usp4_subtext",
+      "label": "Subtext",
+      "default": "Peace of mind with every purchase"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "presets": [
+    {
+      "name": "Company USPs"
+    }
+  ]
+}
+{% endschema %}

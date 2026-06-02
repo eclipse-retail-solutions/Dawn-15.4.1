@@ -1,0 +1,12 @@
+{%- liquid
+  assign min = scale_min | default: 24
+  assign name = name | default: 'gap'
+-%}
+
+{%- if value != blank -%}
+  {%- if disable_scaling != true and value > min -%}
+    --{{ name }}: max({{ min }}px, calc(var(--gap-scale, 1) * {{ value }}px));
+  {%- else -%}
+    --{{ name }}: {{ value }}px;
+  {%- endif -%}
+{%- endif -%}

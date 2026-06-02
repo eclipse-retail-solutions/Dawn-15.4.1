@@ -1,0 +1,27 @@
+{%- liquid
+  assign scale_min = 20
+  assign keys = 'padding-block-start,padding-block-end,padding-inline-start,padding-inline-end' | split: ','
+
+  for key in keys
+    assign value = settings[key]
+
+    if value != blank
+      echo '--'
+      echo key
+      echo ': '
+
+      if value > scale_min
+        echo 'max('
+        echo scale_min
+        echo 'px, calc(var(--spacing-scale, 1) * '
+        echo value
+        echo 'px))'
+      else
+        echo value
+        echo 'px'
+      endif
+
+      echo ';'
+    endif
+  endfor
+-%}

@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(python3 -c \"import json; f=open\\('/Users/brian/Documents/GitHub/Dawn-15.4.1/sections/header-group.json'\\); content=f.read\\(\\); content=content.split\\('*/\\\\n',1\\)[-1]; json.loads\\(content\\); print\\('Valid JSON'\\)\")"
+      "Bash(python3 -c \"import json; f=open\\('/Users/brian/Documents/GitHub/Dawn-15.4.1/sections/header-group.json'\\); content=f.read\\(\\); content=content.split\\('*/\\\\n',1\\)[-1]; json.loads\\(content\\); print\\('Valid JSON'\\)\")",
+      "Bash(grep -E \"\\\\.css$\")"
     ]
   }
 }

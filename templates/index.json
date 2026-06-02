@@ -89,6 +89,49 @@
         "padding_bottom": 36
       }
     },
+    "usp_strip_bJRxBj": {
+      "type": "usp-strip",
+      "blocks": {
+        "usp_item_xRpidY": {
+          "type": "usp_item",
+          "settings": {
+            "text": "Free UK delivery on orders over £100",
+            "icon": "truck",
+            "separator": "·"
+          }
+        },
+        "usp_item_c3aVtr": {
+          "type": "usp_item",
+          "settings": {
+            "text": "Secure Checkout",
+            "icon": "star",
+            "separator": "·"
+          }
+        },
+        "usp_item_r7hKAH": {
+          "type": "usp_item",
+          "settings": {
+            "text": "Free UK Returns within 15 days",
+            "icon": "return",
+            "separator": "·"
+          }
+        }
+      },
+      "block_order": [
+        "usp_item_xRpidY",
+        "usp_item_c3aVtr",
+        "usp_item_r7hKAH"
+      ],
+      "name": "USP Strip",
+      "settings": {
+        "color_scheme": "",
+        "direction": "normal",
+        "icon_size": 18,
+        "item_gap": 40,
+        "padding_top": 16,
+        "padding_bottom": 16
+      }
+    },
     "multirow_T73QJU": {
       "type": "multirow",
       "blocks": {
@@ -305,49 +348,6 @@
         "padding_top": 40,
         "padding_bottom": 40
       }
-    },
-    "usp_strip_bJRxBj": {
-      "type": "usp-strip",
-      "blocks": {
-        "usp_item_xRpidY": {
-          "type": "usp_item",
-          "settings": {
-            "text": "Free UK delivery on orders over £100",
-            "icon": "truck",
-            "separator": "·"
-          }
-        },
-        "usp_item_c3aVtr": {
-          "type": "usp_item",
-          "settings": {
-            "text": "Secure Checkout",
-            "icon": "star",
-            "separator": "·"
-          }
-        },
-        "usp_item_r7hKAH": {
-          "type": "usp_item",
-          "settings": {
-            "text": "Free UK Returns within 15 days",
-            "icon": "return",
-            "separator": "·"
-          }
-        }
-      },
-      "block_order": [
-        "usp_item_xRpidY",
-        "usp_item_c3aVtr",
-        "usp_item_r7hKAH"
-      ],
-      "name": "USP Strip",
-      "settings": {
-        "color_scheme": "",
-        "direction": "normal",
-        "icon_size": 18,
-        "item_gap": 40,
-        "padding_top": 16,
-        "padding_bottom": 16
-      }
     }
   },
   "order": [
@@ -358,8 +358,8 @@
     "company_usps_ihTRza",
     "1776429765aba803c0",
     "custom_liquid_bnWKD3",
+    "usp_strip_bJRxBj",
     "blocks_6CnLki",
-    "c2a_trustmetrics_eMtphV",
-    "usp_strip_bJRxBj"
+    "c2a_trustmetrics_eMtphV"
   ]
 }

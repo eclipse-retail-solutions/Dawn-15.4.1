@@ -57,7 +57,6 @@
     },
     "custom_liquid_daBVGD": {
       "type": "custom-liquid",
-      "disabled": true,
       "name": "CTA Top Banner",
       "settings": {
         "custom_liquid": "{%- render 'cta_top-banner' -%}",

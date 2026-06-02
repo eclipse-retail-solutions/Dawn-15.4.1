@@ -80,16 +80,6 @@
             "show_gift_card_recipient": true
           }
         },
-        "klarna_on_site_messaging_app_block_LgdtYT": {
-          "type": "shopify://apps/klarna-on-site-messaging/blocks/app-block/b95936a9-74b6-4a95-8103-6a1b6459c25e",
-          "settings": {
-            "data_key": "top-strip-promotion-badge",
-            "theme": "default",
-            "topPadding": "0",
-            "bottomPadding": "0",
-            "messagePrefix": ""
-          }
-        },
         "description": {
           "type": "description",
           "settings": {}
@@ -160,7 +150,6 @@
         "variant_picker",
         "quantity_selector",
         "buy_buttons",
-        "klarna_on_site_messaging_app_block_LgdtYT",
         "description",
         "collapsible_tab_LgEKyw",
         "collapsible_tab_TTJyxU",

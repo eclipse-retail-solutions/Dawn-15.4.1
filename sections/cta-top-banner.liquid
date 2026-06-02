@@ -1,0 +1,288 @@
+{% style %}
+  @keyframes ctaBannerFade {
+    from { opacity: .4 }
+    to   { opacity: 1 }
+  }
+
+  #cta_top-banner .fade {
+    -webkit-animation-name: ctaBannerFade;
+    -webkit-animation-duration: 1.5s;
+    animation-name: ctaBannerFade;
+    animation-duration: 1.5s;
+  }
+
+  #cta_top-banner .mySlides {
+    display: none;
+  }
+
+  #cta_top-banner .mySlides a,
+  #cta_top-banner .mySlides p {
+    align-items: center;
+    color: rgb(var(--color-foreground));
+    display: flex;
+    font-size: .9rem;
+    height: 4.5rem;
+    justify-content: center;
+    line-height: 1.6;
+    margin: unset;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  @media only screen and (max-width: 749px) {
+    #cta_top-banner .mySlides:not(:nth-child(2n)) {
+      display: none;
+    }
+  }
+
+  @media only screen and (min-width: 750px) {
+    #cta_top-banner .slideshow-container {
+      display: flex;
+      justify-content: space-between;
+      height: 45px;
+      position: relative;
+      margin: auto;
+    }
+    #cta_top-banner .banner-block {
+      display: inline-block !important;
+      flex: 1;
+      text-align: center;
+    }
+  }
+
+  @media only screen and (min-width: 990px) {
+    #cta_top-banner .banner-block a {
+      font-size: 12px;
+    }
+  }
+
+  #cta_top-banner .slideshow-container {
+    height: 45px;
+    position: relative;
+    margin: auto;
+    max-width: 1440px;
+  }
+
+  /* Reviews.io widget */
+  .RatingBarWidget-prefix .RatingBarWidget .RatingBarWidget__inner {
+    background: unset;
+  }
+  @media (max-width: 1172px) {
+    .RatingBarWidget-prefix .u-marginTop--xxs * {
+      display: inline-block;
+    }
+  }
+  @media (max-width: 1123px) {
+    .RatingBarWidget-prefix span:nth-child(n+2) {
+      display: none;
+    }
+  }
+
+  /* Klarna placement */
+  #klarna-c2a::part(osm-message),
+  #klarna-c2a::part(osm-cta) {
+    color: white;
+    font-size: 13px;
+    line-height: 1;
+  }
+  #klarna-c2a::part(osm-container) {
+    background-color: transparent;
+  }
+{% endstyle %}
+
+<div id="cta_top-banner">
+  <div class="page-width">
+    <div class="C2A top-banner slideshow-container">
+      {%- for block in section.blocks -%}
+        <div class="mySlides fade banner-block text-center" {{ block.shopify_attributes }}>
+          {%- case block.type -%}
+
+            {%- when 'text_link' -%}
+              <p>
+                {%- if block.settings.link != blank -%}
+                  <a style="line-height: 1.25;" href="{{ block.settings.link }}">
+                {%- endif -%}
+                {%- if block.settings.bold_text != blank -%}
+                  <strong>{{ block.settings.bold_text }}&nbsp;</strong>
+                {%- endif -%}
+                {{- block.settings.text -}}
+                {%- if block.settings.link != blank -%}
+                  </a>
+                {%- endif -%}
+              </p>
+
+            {%- when 'reviews_widget' -%}
+              <div
+                class="reviews-io-rating-bar-widget"
+                widget-id="{{ block.settings.widget_id }}"
+                data-store-name="{{ block.settings.store_name }}"
+                lang="{{ block.settings.lang }}"
+              ></div>
+              <script src="//widget.reviews.io/modern-widgets/rating-bar.js" defer></script>
+
+            {%- when 'klarna_placement' -%}
+              <klarna-placement
+                id="klarna-c2a"
+                data-key="{{ block.settings.data_key }}"
+                data-locale="{{ block.settings.data_locale }}"
+              ></klarna-placement>
+
+            {%- when 'custom_html' -%}
+              {{ block.settings.html }}
+
+          {%- endcase -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var myIndex = 0;
+    var speed = {{ section.settings.rotation_speed | times: 1000 }};
+
+    function carousel() {
+      var slides = document.querySelectorAll('#cta_top-banner .mySlides');
+      slides.forEach(function (s) { s.style.display = 'none'; });
+      myIndex++;
+      if (myIndex > slides.length) myIndex = 1;
+      if (slides[myIndex - 1]) slides[myIndex - 1].style.display = 'block';
+      setTimeout(carousel, speed);
+    }
+
+    carousel();
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "CTA Top Banner",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 5,
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-3"
+    },
+    {
+      "type": "range",
+      "id": "rotation_speed",
+      "label": "Rotation speed (seconds)",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "default": 2,
+      "info": "How long each item shows on mobile before rotating to the next."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text_link",
+      "name": "Text / Link",
+      "settings": [
+        {
+          "type": "text",
+          "id": "bold_text",
+          "label": "Bold prefix",
+          "info": "Displayed in bold before the main text. Leave blank to omit.",
+          "placeholder": "e.g. FAST"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Message",
+          "default": "UK & Ireland Delivery"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link URL"
+        }
+      ]
+    },
+    {
+      "type": "reviews_widget",
+      "name": "Reviews.io Widget",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "widget_id",
+          "label": "Widget ID",
+          "default": "lA3XFLzE9ipuUMPH"
+        },
+        {
+          "type": "text",
+          "id": "store_name",
+          "label": "Store name (slug)",
+          "default": "excel-clothing"
+        },
+        {
+          "type": "text",
+          "id": "lang",
+          "label": "Language code",
+          "default": "en"
+        }
+      ]
+    },
+    {
+      "type": "klarna_placement",
+      "name": "Klarna Placement",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "data_key",
+          "label": "Placement key",
+          "default": "top-strip-promotion-badge",
+          "info": "The Klarna data-key attribute, e.g. top-strip-promotion-badge"
+        },
+        {
+          "type": "text",
+          "id": "data_locale",
+          "label": "Locale",
+          "default": "en-GB",
+          "info": "e.g. en-GB, en-US, de-DE"
+        }
+      ]
+    },
+    {
+      "type": "custom_html",
+      "name": "Custom HTML",
+      "settings": [
+        {
+          "type": "html",
+          "id": "html",
+          "label": "HTML content"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "CTA Top Banner",
+      "blocks": [
+        {
+          "type": "text_link",
+          "settings": {
+            "bold_text": "FAST",
+            "text": "UK & Ireland Delivery",
+            "link": "/delivery"
+          }
+        },
+        {
+          "type": "reviews_widget"
+        },
+        {
+          "type": "klarna_placement"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

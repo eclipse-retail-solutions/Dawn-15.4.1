@@ -55,20 +55,40 @@
         "padding_bottom": 0
       }
     },
-    "custom_liquid_daBVGD": {
-      "type": "custom-liquid",
-      "name": "CTA Top Banner",
+    "cta_top_banner": {
+      "type": "cta-top-banner",
+      "blocks": {
+        "text_link_1": {
+          "type": "text_link",
+          "settings": {
+            "bold_text": "FAST",
+            "text": "UK & Ireland Delivery",
+            "link": "/delivery"
+          }
+        },
+        "reviews_widget_1": {
+          "type": "reviews_widget",
+          "settings": {}
+        },
+        "klarna_placement_1": {
+          "type": "klarna_placement",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "text_link_1",
+        "reviews_widget_1",
+        "klarna_placement_1"
+      ],
       "settings": {
-        "custom_liquid": "{%- render 'cta_top-banner' -%}",
         "color_scheme": "scheme-3",
-        "padding_top": 0,
-        "padding_bottom": 0
+        "rotation_speed": 2
       }
     }
   },
   "order": [
     "announcement-bar",
     "header",
-    "custom_liquid_daBVGD"
+    "cta_top_banner"
   ]
 }

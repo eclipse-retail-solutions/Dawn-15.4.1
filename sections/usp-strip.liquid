@@ -58,10 +58,10 @@
               {%- if block.settings.text != blank -%}
                 <span class="usp-strip__text">{{ block.settings.text }}</span>
               {%- endif -%}
-              {%- if block.settings.separator != blank -%}
-                <span class="usp-strip__separator" aria-hidden="true">{{ block.settings.separator }}</span>
-              {%- endif -%}
             </div>
+            {%- if block.settings.separator != blank -%}
+              <span class="usp-strip__separator" aria-hidden="true">{{ block.settings.separator }}</span>
+            {%- endif -%}
           {% endfor %}
         </div>
       </div>
@@ -132,8 +132,8 @@
 
   .usp-strip__separator {
     font-size: 1.4rem;
-    margin-inline-start: calc(var(--marquee-gap) - 0.6rem);
     opacity: 0.5;
+    flex-shrink: 0;
   }
 {% endstylesheet %}
 

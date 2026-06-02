@@ -1,4 +1,4 @@
-<style>
+{% style %}
 #klarna-c2a::part(osm-message),
 #klarna-c2a::part(osm-cta) {
     color: white;
@@ -8,16 +8,16 @@
 #klarna-c2a::part(osm-container) {
     background-color: transparent;
 }
-</style>
-{% comment %} <!-- Placement v2 UPDATE -->
+{% endstyle %}
+<!-- Placement v2 UPDATE -->
 <klarna-placement
     id="klarna-c2a"
     data-key="top-strip-promotion-badge"
     data-locale="en-GB"
 ></klarna-placement>
-<!-- end Placement --> {% endcomment %}
+<!-- end Placement -->
 
-<div part="osm-container" data-testid="top-strip-promotion-badge" class="container ">
+{% comment %} <div part="osm-container" data-testid="top-strip-promotion-badge" class="container ">
       <div class="badge-container">
         <div class="badge" part="osm-badge-container"><!--?lit$642404138$--><svg part="osm-badge" role="img" xmlns="http://www.w3.org/2000/svg" width="71.25" height="30" viewBox="0 0 71.25 30" aria-label="Klarna" version="2.1" <title="" id="osm-klarna-title">Klarna badge
 &gt;
@@ -46,4 +46,4 @@
   
         <!--?lit$642404138$-->
       </div>
-    </div>
+    </div> {% endcomment %}

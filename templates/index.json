@@ -9,91 +9,8 @@
  */
 {
   "sections": {
-    "image_banner": {
-      "type": "image-banner",
-      "blocks": {
-        "heading": {
-          "type": "heading",
-          "disabled": true,
-          "settings": {
-            "heading": "Image banner",
-            "heading_size": "h0"
-          }
-        },
-        "text": {
-          "type": "text",
-          "disabled": true,
-          "settings": {
-            "text": "Give customers details about the banner image(s) or content on the template.",
-            "text_style": "body"
-          }
-        },
-        "button": {
-          "type": "buttons",
-          "disabled": true,
-          "settings": {
-            "button_label_1": "Shop all",
-            "button_link_1": "shopify://collections/all",
-            "button_style_secondary_1": true,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
-        }
-      },
-      "block_order": [
-        "heading",
-        "text",
-        "button"
-      ],
-      "settings": {
-        "image": "shopify://shop_images/Hero-Barbour-Womens-SS26-1950.jpg",
-        "image_overlay_opacity": 0,
-        "image_height": "adapt",
-        "image_behavior": "none",
-        "desktop_content_position": "bottom-center",
-        "desktop_content_alignment": "right",
-        "show_text_box": false,
-        "color_scheme": "scheme-3",
-        "stack_images_on_mobile": false,
-        "mobile_content_alignment": "center",
-        "show_text_below": false
-      }
-    },
     "hero_pyDJeW": {
       "type": "hero",
-      "blocks": {
-        "heading_LBF3jU": {
-          "type": "heading",
-          "settings": {
-            "heading": "Hero heading",
-            "heading_size": "h1"
-          }
-        },
-        "text_eHrY7n": {
-          "type": "text",
-          "settings": {
-            "text": "Tell your story and give customers insight into your brand.",
-            "text_style": "body"
-          }
-        },
-        "buttons_KCVN8T": {
-          "type": "buttons",
-          "settings": {
-            "button_label_1": "Shop now",
-            "button_link_1": "shopify://collections/all",
-            "button_style_secondary_1": false,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
-        }
-      },
-      "block_order": [
-        "heading_LBF3jU",
-        "text_eHrY7n",
-        "buttons_KCVN8T"
-      ],
       "name": "Hero",
       "settings": {
         "media_type_1": "image",
@@ -436,7 +353,6 @@
     }
   },
   "order": [
-    "image_banner",
     "hero_pyDJeW",
     "featured_collection",
     "multirow_T73QJU",

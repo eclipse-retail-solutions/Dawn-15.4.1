@@ -122,6 +122,9 @@
               <script src="//widget.reviews.io/modern-widgets/rating-bar.js" defer></script>
 
             {%- when 'klarna_placement' -%}
+              {%  style %}
+                .badge {height: 24px}
+              {% endstyle %}
               <klarna-placement
                 id="klarna-c2a"
                 data-key="{{ block.settings.data_key }}"

@@ -26,6 +26,8 @@
     "card_border_opacity": 10,
     "card_shadow_opacity": 0,
     "card_shadow_vertical_offset": 4,
+    "collection_card_style": "card",
+    "collection_card_text_alignment": "center",
     "collection_card_border_opacity": 10,
     "collection_card_shadow_opacity": 0,
     "collection_card_shadow_vertical_offset": 4,

@@ -89,7 +89,7 @@
           "settings": {
             "heading": "Product Description",
             "icon": "none",
-            "content": "{{ product.metafields.custom.bullets | metafield_tag }}",
+            "content": "",
             "page": ""
           }
         },
@@ -98,7 +98,7 @@
           "settings": {
             "heading": "Materials",
             "icon": "none",
-            "content": "<p>{{ product.metafields.custom.material | metafield_tag }}</p>",
+            "content": "",
             "page": ""
           }
         },
@@ -107,7 +107,7 @@
           "settings": {
             "heading": "Care Instructions",
             "icon": "none",
-            "content": "<p>{{ product.metafields.custom.care_instructions | metafield_tag }}</p>",
+            "content": "",
             "page": ""
           }
         },

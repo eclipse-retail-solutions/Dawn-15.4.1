@@ -342,7 +342,7 @@
       "name": "USP Strip",
       "settings": {
         "color_scheme": "",
-        "direction": "reverse",
+        "direction": "normal",
         "icon_size": 18,
         "item_gap": 40,
         "padding_top": 16,

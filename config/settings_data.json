@@ -25,7 +25,7 @@
     "card_image_padding": 0,
     "card_text_alignment": "center",
     "card_color_scheme": "scheme-1",
-    "card_border_thickness": 2,
+    "card_border_thickness_bottom": 2,
     "card_border_opacity": 10,
     "card_shadow_opacity": 0,
     "card_shadow_horizontal_offset": 4,
@@ -58,6 +58,7 @@
     "currency_code_enabled": false,
     "cart_type": "drawer",
     "show_vendor": true,
+    "card_border_thickness": 2,
     "content_for_index": [],
     "blocks": {
       "7924418359578431505": {

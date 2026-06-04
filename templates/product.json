@@ -12,12 +12,6 @@
     "main": {
       "type": "main-product",
       "blocks": {
-        "custom_liquid_ehqVFA": {
-          "type": "custom_liquid",
-          "settings": {
-            "custom_liquid": "<script src=\"https://widget.reviews.io/badge-ribbon/dist.js\"></script>\n<div id=\"badge-ribbon\"></div>\n<script>\n    reviewsBadgeRibbon(\"badge-ribbon\", {\n        store: \"excel-clothing\",\n        size: \"small\",\n        \n        \n    });\n</script>"
-          }
-        },
         "vendor": {
           "type": "text",
           "settings": {
@@ -100,36 +94,6 @@
           "type": "description",
           "settings": {}
         },
-        "reviews_io_reviewsio_polaris_8Cbejf": {
-          "type": "shopify://apps/reviews-io/blocks/reviewsio-polaris/92a082e5-b297-4e88-b428-ac96cbc505f9",
-          "settings": {
-            "star": "#e15a1d",
-            "review_type": "product_review",
-            "per_page": 8,
-            "primary_btn_bg_color": "#000",
-            "primary_btn_border_color": "#000",
-            "primary_btn_text_color": "#fff",
-            "secondary_btn_border_color": "#000",
-            "secondary_btn_text_color": "#000",
-            "border_color": "#d9d9d9",
-            "heading_text_color": "#000",
-            "heading_font": "sans_serif_n4",
-            "body_text_color": "#000",
-            "badge_icon_color": "#000",
-            "badge_text_color": "#000",
-            "enable_rich_snippets": true,
-            "show_location": true,
-            "show_tab_selector": false,
-            "show_dates": true,
-            "show_avatar": true,
-            "enable_sentiment_analysis": false,
-            "enable_replies": false,
-            "widget_spacing": 0,
-            "capitalise_headers_and_buttons": false,
-            "show_review_title": false,
-            "default_sort": "date_desc"
-          }
-        },
         "collapsible_tab_LgEKyw": {
           "type": "collapsible_tab",
           "settings": {
@@ -176,16 +140,52 @@
             "page": ""
           }
         },
+        "custom_liquid_ehqVFA": {
+          "type": "custom_liquid",
+          "name": "Reviews.io Widget",
+          "disabled": true,
+          "settings": {
+            "custom_liquid": "<script src=\"https://widget.reviews.io/badge-ribbon/dist.js\"></script>\n<div id=\"badge-ribbon\"></div>\n<script>\n    reviewsBadgeRibbon(\"badge-ribbon\", {\n        store: \"excel-clothing\",\n        size: \"small\",\n        \n        \n    });\n</script>"
+          }
+        },
+        "reviews_io_reviewsio_polaris_8Cbejf": {
+          "type": "shopify://apps/reviews-io/blocks/reviewsio-polaris/92a082e5-b297-4e88-b428-ac96cbc505f9",
+          "settings": {
+            "star": "#e15a1d",
+            "review_type": "product_review",
+            "per_page": 8,
+            "primary_btn_bg_color": "#000",
+            "primary_btn_border_color": "#000",
+            "primary_btn_text_color": "#fff",
+            "secondary_btn_border_color": "#000",
+            "secondary_btn_text_color": "#000",
+            "border_color": "#d9d9d9",
+            "heading_text_color": "#000",
+            "heading_font": "sans_serif_n4",
+            "body_text_color": "#000",
+            "badge_icon_color": "#000",
+            "badge_text_color": "#000",
+            "enable_rich_snippets": true,
+            "show_location": true,
+            "show_tab_selector": false,
+            "show_dates": true,
+            "show_avatar": true,
+            "enable_sentiment_analysis": false,
+            "enable_replies": false,
+            "widget_spacing": 0,
+            "capitalise_headers_and_buttons": false,
+            "show_review_title": false,
+            "default_sort": "date_desc"
+          }
+        },
         "share": {
           "type": "share",
-          "disabled": true,
           "settings": {
             "share_label": "Share"
           }
         }
       },
       "block_order": [
-        "custom_liquid_ehqVFA",
         "vendor",
         "title",
         "caption",
@@ -199,12 +199,13 @@
         "buy_buttons",
         "klarna_on_site_messaging_app_block_rbk9VC",
         "description",
-        "reviews_io_reviewsio_polaris_8Cbejf",
         "collapsible_tab_LgEKyw",
         "collapsible_tab_TTJyxU",
         "collapsible-row-3",
         "collapsible-row-1",
         "collapsible-row-2",
+        "custom_liquid_ehqVFA",
+        "reviews_io_reviewsio_polaris_8Cbejf",
         "share"
       ],
       "settings": {

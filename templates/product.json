@@ -107,7 +107,7 @@
           "type": "collapsible_tab",
           "settings": {
             "heading": "Materials",
-            "icon": "none",
+            "icon": "shirt",
             "content": "",
             "page": ""
           }
@@ -116,7 +116,7 @@
           "type": "collapsible_tab",
           "settings": {
             "heading": "Care Instructions",
-            "icon": "none",
+            "icon": "washing",
             "content": "",
             "page": ""
           }
@@ -125,16 +125,15 @@
           "type": "collapsible_tab",
           "settings": {
             "heading": "Shipping & Returns",
-            "icon": "none",
+            "icon": "return",
             "content": "",
             "page": "delivery-information-ie-uk"
           }
         },
         "collapsible-row-2": {
           "type": "collapsible_tab",
-          "disabled": true,
           "settings": {
-            "heading": "Dimensions",
+            "heading": "Size Guide",
             "icon": "ruler",
             "content": "",
             "page": ""

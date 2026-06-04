@@ -12,6 +12,12 @@
     "main": {
       "type": "main-product",
       "blocks": {
+        "custom_liquid_ehqVFA": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<script src=\"https://widget.reviews.io/badge-ribbon/dist.js\"></script>\n<div id=\"badge-ribbon\"></div>\n<script>\n    reviewsBadgeRibbon(\"badge-ribbon\", {\n        store: \"excel-clothing\",\n        size: \"small\",\n        \n        \n    });\n</script>"
+          }
+        },
         "vendor": {
           "type": "text",
           "settings": {
@@ -105,7 +111,7 @@
             "primary_btn_text_color": "#fff",
             "secondary_btn_border_color": "#000",
             "secondary_btn_text_color": "#000",
-            "border_color": "#D9D9D9",
+            "border_color": "#d9d9d9",
             "heading_text_color": "#000",
             "heading_font": "sans_serif_n4",
             "body_text_color": "#000",
@@ -179,6 +185,7 @@
         }
       },
       "block_order": [
+        "custom_liquid_ehqVFA",
         "vendor",
         "title",
         "caption",

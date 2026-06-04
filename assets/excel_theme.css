@@ -215,7 +215,7 @@ klarna-placement[data-key="top-strip-promotion-badge"]::part(osm-container) {
 klarna-placement[data-key=top-strip-promotion-badge]::part(osm-container) p.osm-message {
     font-size: 1rem;
 }
-div.shopify-block.shopify-app-block klarna-placement::part(osm-container) {
+div.shopify-block.shopify-app-block klarna-placement div::part(osm-container) {
     background: cream;
 }
 

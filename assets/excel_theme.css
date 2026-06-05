@@ -281,3 +281,41 @@ section.section-collection-list slider-component ul.collection-list li.collectio
         margin: 0 calc((100vw - 1400px) /2);
     }
 }
+
+/* Category pages - Filtering */
+@media(min-width: 768px) {
+
+    aside#main-collection-filters .facets-container .facets__form {
+        align-items: start;
+        margin-bottom: 0.5rem;
+    }
+    aside#main-collection-filters .facets-container summary.facets__summary {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin-bottom: 0;
+    }
+    aside#main-collection-filters .facets-container h2 {
+        font-size: 1.2rem;
+    }
+    aside#main-collection-filters .facets-container .facets__wrapper {
+        align-items: flex-end;
+    }
+    aside#main-collection-filters .facets-container facet-remove {
+        padding: 0;
+    }
+    aside#main-collection-filters .facets-container facet-remove span {
+        font-size: 1.2rem;
+    }
+    aside#main-collection-filters .facets-container .active-facets__button {
+        margin: 0;
+        padding: 1rem;
+    }
+    aside#main-collection-filters .facets-container .active-facets {
+        background: white;
+        display: none;
+    }
+    aside#main-collection-filters .facets-container .active-facets:has(facet-remove + facet-remove) {
+        display: flex;
+        margin-top: 1rem;
+    }
+}

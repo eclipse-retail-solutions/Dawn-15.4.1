@@ -209,6 +209,14 @@
                 </p>
               {%- when 'custom_liquid' -%}
                 {{ block.settings.custom_liquid }}
+              {%- when 'klarna_placement' -%}
+                <klarna-placement
+                  id="klarna-pdp"
+                  data-key="{{ block.settings.data_key }}"
+                  data-locale="{{ block.settings.data_locale }}"
+                  data-purchase-amount="{{ product.selected_or_first_available_variant.price }}"
+                  {{ block.shopify_attributes }}
+                ></klarna-placement>
               {%- when 'collapsible_tab' -%}
                 <div class="product__accordion accordion quick-add-hidden" {{ block.shopify_attributes }}>
                   <details id="Details-{{ block.id }}-{{ section.id }}">
@@ -955,6 +963,25 @@
           "id": "custom_liquid",
           "label": "t:sections.custom-liquid.settings.custom_liquid.label",
           "info": "t:sections.custom-liquid.settings.custom_liquid.info"
+        }
+      ]
+    },
+    {
+      "type": "klarna_placement",
+      "name": "Klarna Placement",
+      "settings": [
+        {
+          "type": "text",
+          "id": "data_key",
+          "label": "Placement key",
+          "default": "credit-promotion-badge",
+          "info": "The Klarna data-key attribute, e.g. credit-promotion-badge"
+        },
+        {
+          "type": "text",
+          "id": "data_locale",
+          "label": "Locale",
+          "default": "en-GB"
         }
       ]
     },

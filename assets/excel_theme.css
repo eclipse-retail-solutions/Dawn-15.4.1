@@ -321,6 +321,7 @@ section.section-collection-list slider-component ul.collection-list li.collectio
     }
     aside#main-collection-filters .facets-container .active-facets:has(facet-remove + facet-remove) {
         display: flex;
+        justify-content: center;
         margin-top: 1rem;
     }
 }

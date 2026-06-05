@@ -284,7 +284,12 @@ section.section-collection-list slider-component ul.collection-list li.collectio
 
 /* Category pages - Filtering */
 @media(min-width: 768px) {
-
+    aside#main-collection-filters .facets-container {
+        background: #EFEAE5;
+        border-bottom: 3px solid #EFEAE5;
+        padding: 1rem 1rem 0;
+        text-transform: uppercase;
+    }
     aside#main-collection-filters .facets-container .facets__form {
         align-items: start;
         margin-bottom: 0.5rem;
